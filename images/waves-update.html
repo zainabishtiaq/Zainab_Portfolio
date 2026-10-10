@@ -1,0 +1,197 @@
+<!-- Paste this block just before </body>, after the NACA update. -->
+<style>
+  .detail[data-theme="waves"] .tab-content h3 {
+    color: #eff2f4; font-size: 27px; margin: 0 0 16px;
+  }
+  .detail[data-theme="waves"] .tab-content h4 {
+    color: #d4dfe7; font-size: 18px; margin: 28px 0 14px;
+  }
+  .detail[data-theme="waves"] .tab-content p { max-width: 850px; }
+  .detail[data-theme="waves"] .tab-content li { margin: 10px 0; }
+  .waves-figure {
+    width: 100%; max-width: 720px; margin: 26px auto;
+    border-radius: 12px; overflow: hidden; background: #fff;
+  }
+  .waves-figure a { display: block; }
+  .waves-figure img {
+    display: block; width: 100%; height: auto;
+    max-height: 360px; object-fit: contain; padding: 10px;
+  }
+  .waves-figure figcaption {
+    padding: 12px 16px; background: #202830;
+    color: #d1dae1; font-size: 13px; line-height: 1.7;
+  }
+  .waves-gallery {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px; margin: 26px 0;
+  }
+  .waves-gallery .waves-figure { margin: 0; }
+  .waves-gallery .waves-figure img { max-height: 270px; }
+  .waves-equation {
+    padding: 18px 22px; border-left: 3px solid #bdcbd6;
+    background: #ffffff06; margin: 22px 0;
+    font-size: 17px; line-height: 1.9; overflow-wrap: anywhere;
+  }
+  .detail[data-theme="waves"] details { margin: 25px 0; }
+  .detail[data-theme="waves"] summary {
+    cursor: pointer; padding: 12px 0; color: #d4dfe7;
+  }
+  @media (max-width: 600px) {
+    .waves-gallery { grid-template-columns: 1fr; }
+    .waves-figure img { max-height: 280px; padding: 6px; }
+  }
+</style>
+
+<script>
+(function () {
+  if (typeof projects === 'undefined' || !projects.waves) return;
+
+  function figure(file, alt, caption) {
+    return `<figure class="waves-figure">
+      <a href="images/${file}" target="_blank" rel="noopener">
+        <img src="images/${file}" alt="${alt}" loading="lazy">
+      </a>
+      <figcaption>${caption}</figcaption>
+    </figure>`;
+  }
+
+  const waves = projects.waves;
+  waves.title = 'Waves in a lake';
+  waves.label = 'Wave propagation · Numerical methods · Python';
+  waves.intro = 'From a local disturbance to wave–obstacle interaction: modelling, observing and improving a two-dimensional wave simulation.';
+  waves.caption = 'Surface ripples — project cover image.';
+
+  waves.Introduction = `
+    <h3>From a falling stone to propagating waves</h3>
+    <p>What happens when a stone disturbs a calm water surface? This project
+    explored wave propagation using a simplified two-dimensional model,
+    with a localised source, absorbing boundaries and an obstacle.</p>
+    <p>The work began with a membrane-wave reference problem to study the
+    numerical scheme. It then developed into an independently designed
+    simulation inspired by ripples in a lake.</p>
+    <h4>Research questions</h4>
+    <ul>
+      <li>How can a localised impact be represented in a numerical wave model?</li>
+      <li>How can waves leave a finite computational domain with reduced reflection?</li>
+      <li>How does an obstacle change the propagating disturbance?</li>
+      <li>How can physical observations guide improvements to the model?</li>
+    </ul>`;
+
+  waves.Methods = `
+    <h3>Model &amp; numerical approach</h3>
+    <h4>A forced two-dimensional wave equation</h4>
+    <div class="waves-equation">∂²u/∂t² = c² (∂²u/∂x² + ∂²u/∂y²) + F(x, y, t)</div>
+    <p>The scalar field u represents the modelled disturbance, c is a
+    constant propagation speed, and F represents the localised forcing.
+    The lake-inspired calculation starts from a surface at rest.</p>
+    <h4>Discretisation and implementation</h4>
+    <ul>
+      <li>A regular square grid and a five-point finite-difference Laplacian.</li>
+      <li>Centred second-order approximations in space and time, with explicit time stepping.</li>
+      <li>An elliptical forcing region with a time-dependent source.</li>
+      <li>Mur absorbing conditions on the outer boundaries to reduce outgoing-wave reflections.</li>
+      <li>Python implementation with NumPy and Matplotlib visualisations.</li>
+    </ul>
+    <h4>Time-step stability</h4>
+    <div class="waves-equation">c Δt / h ≤ 1 / √2 ≈ 0.707</div>
+    <p>For the standard interior scheme on an equal-spacing grid, the time
+    step must respect this CFL condition. The reference tests examined
+    behaviour below, near and above the stability threshold.</p>
+    <h4>Obstacle representation</h4>
+    ${figure('waves-obstacle.png', 'Initial square computational domain with an obstacle near x and y equal to 0.7',
+      'Initial computational domain and square obstacle.')}
+    <p>The initial model constrained the disturbance inside the obstacle.
+    A revised implementation used neighbouring field values to update
+    cells next to its boundary, exploring a different reflected response.</p>`;
+
+  waves.Results = `
+    <h3>Results: simulate, observe, revise</h3>
+    <h4>1. Numerical checks on the reference problem</h4>
+    <div class="waves-gallery">
+      ${figure('waves-reference-initial.png', 'Initial displacement field in the membrane reference problem', 'Reference problem · Initial field.')}
+      ${figure('waves-reference-final.png', 'Final displacement field in the membrane reference problem', 'Reference problem · Final field.')}
+    </div>
+    <p>The membrane problem provided a reference for checking the
+    implementation before adding local forcing, absorbing boundaries
+    and an obstacle. The project also compared final errors across grid
+    spacings and time-step ratios.</p>
+    <details><summary>View the grid-spacing error comparison</summary>
+      ${figure('waves-error.png', 'Final error versus grid spacing for three time-step ratios',
+        'Final error versus grid spacing for different time-step ratios D.')}
+    </details>
+    <h4>2. Propagation from a localised disturbance</h4>
+    <div class="waves-gallery">
+      ${figure('waves-time-016.png', 'Early localised disturbance at t equals 0.16', 't = 0.16 · Localised disturbance.')}
+      ${figure('waves-time-042.png', 'Wave interaction with the obstacle at t equals 0.42', 't = 0.42 · Interaction with the obstacle.')}
+      ${figure('waves-time-060.png', 'Disturbed wavefront propagating around the obstacle at t equals 0.60', 't = 0.60 · Wavefront deformation.')}
+      ${figure('waves-time-095.png', 'Wavefront approaching the domain boundaries at t equals 0.95', 't = 0.95 · Propagation towards the boundaries.')}
+    </div>
+    <p>The elliptical source generates an expanding disturbance. As the
+    wave reaches the obstacle, its shape changes. The outer boundary
+    conditions are intended to let outgoing waves leave the domain
+    with reduced reflection.</p>
+    <details><summary>Numerical limitation: late-time corner artefacts</summary>
+      <div class="waves-gallery">
+        ${figure('waves-corner-126.png', 'Late-time simulation with corner artefacts at t equals 1.26', 't = 1.26 · Boundary and corner artefacts.')}
+        ${figure('waves-corner-216.png', 'Late-time simulation with persistent boundary artefacts at t equals 2.16', 't = 2.16 · Persistent numerical artefacts.')}
+      </div>
+      <p>The initial calculation develops late-time corner artefacts.
+      This identifies boundary and corner treatment as a priority
+      for further numerical checks.</p>
+    </details>
+    <h4>3. A simple physical experiment</h4>
+    <p>A small basin experiment was carried out by dropping a stone into
+    water near an object. Observing the resulting ripples prompted
+    a reconsideration of the initial obstacle model.</p>
+    <div class="waves-gallery">
+      ${figure('waves-experiment-1.png', 'Basin experiment with water and an obstacle before the stone impact', 'Basin experiment · Initial setup.')}
+      ${figure('waves-experiment-3.png', 'Stone impact and ripples in the basin experiment', 'Basin experiment · Impact and ripples.')}
+    </div>
+    <p>The comparison was qualitative: it helped identify behaviours to
+    explore, without providing a quantitative validation of the simulation.</p>
+    <h4>4. Revising the obstacle treatment</h4>
+    <div class="waves-gallery">
+      ${figure('waves-revised-1.png', 'Early field in the revised obstacle simulation', 'Revised model · Early propagation.')}
+      ${figure('waves-revised-2.png', 'Later field in the revised obstacle simulation', 'Revised model · Later propagation.')}
+    </div>
+    <p>The revised script uses neighbouring values in the obstacle-adjacent
+    update to explore a reflected response. It also changes forcing
+    parameters and obstacle size, so these snapshots illustrate a revised
+    configuration rather than an isolated test of one boundary modification.</p>`;
+
+  waves.Conclusion = `
+    <h3>Conclusions &amp; perspectives</h3>
+    <ul>
+      <li>A finite-difference wave solver was developed from a reference problem and extended with local forcing and an obstacle.</li>
+      <li>Absorbing boundaries and obstacle treatment strongly influence the computed wave pattern.</li>
+      <li>Late-time corner artefacts revealed limitations in the initial implementation.</li>
+      <li>A simple physical observation guided a revision of the numerical model.</li>
+    </ul>
+    <h4>Skills developed</h4>
+    <p>Python programming, finite differences, CFL stability analysis,
+    boundary-condition implementation, scientific visualisation and
+    critical comparison between a model and physical observations.</p>
+    <h4>Further investigation</h4>
+    <p>Improve corner treatment, compare obstacle conditions with fixed
+    forcing and geometry, and perform systematic numerical error checks.
+    A gravity–capillary water-wave model would also provide a more complete
+    physical description than the constant-speed wave equation used here.</p>`;
+
+  const previousRenderer = showProjectPart;
+  showProjectPart = function (part) {
+    if (activeProject !== 'waves') {
+      previousRenderer(part);
+      return;
+    }
+    document.querySelectorAll('[data-part]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.part === part));
+    });
+    document.getElementById('detail-content').innerHTML = projects.waves[part];
+  };
+
+  if (activeProject === 'waves') {
+    const panel = document.querySelector('[data-panel="detail"]');
+    if (panel && !panel.hidden) openProject('waves');
+  }
+})();
+</script>

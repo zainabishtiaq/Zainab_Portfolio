@@ -1,0 +1,170 @@
+<style>
+  .detail[data-theme="bacteria"] .tab-content h3 {
+    color: #e0edda; font-size: 27px; margin: 0 0 16px;
+  }
+  .detail[data-theme="bacteria"] .tab-content h4 {
+    color: #b9db92; font-size: 18px; margin: 28px 0 14px;
+  }
+  .detail[data-theme="bacteria"] .tab-content p { max-width: 850px; }
+  .detail[data-theme="bacteria"] .tab-content li { margin: 10px 0; }
+  .bacteria-equation {
+    padding: 18px; margin: 20px 0; border-left: 3px solid #b9db92;
+    background: #ffffff06; line-height: 2; overflow-wrap: anywhere;
+  }
+  .bacteria-result {
+    max-width: 850px; margin: 24px auto; border-radius: 12px;
+    overflow: hidden; background: #080d0a;
+  }
+  .bacteria-result img {
+    display: block; width: 100%; height: auto; max-height: 460px;
+    object-fit: contain;
+  }
+  .bacteria-result figcaption {
+    padding: 12px 16px; color: #c4d3c5; font-size: 13px; line-height: 1.7;
+  }
+  .detail[data-theme="bacteria"] details { margin: 24px 0; }
+  .detail[data-theme="bacteria"] summary {
+    cursor: pointer; padding: 12px 0; color: #b9db92;
+  }
+  @media (max-width: 600px) {
+    .bacteria-result img { max-height: 340px; }
+  }
+</style>
+
+<script>
+(function () {
+  if (typeof projects === 'undefined' || !projects.bacteria) return;
+
+  function result(file, alt, caption) {
+    return `<figure class="bacteria-result">
+      <a href="images/${file}" target="_blank" rel="noopener">
+        <img src="images/${file}" alt="${alt}" loading="lazy">
+      </a>
+      <figcaption>${caption}</figcaption>
+    </figure>`;
+  }
+
+  const bacteria = projects.bacteria;
+  bacteria.title = 'Bacterial Patterns';
+  bacteria.label = 'Reaction–diffusion · Nonlinear dynamics · Python';
+  bacteria.intro = 'Exploring how local interactions and diffusion generate complex spatial patterns, from reaction–diffusion structures to bacterial colony growth.';
+
+  bacteria.Introduction = `
+    <h3>How do patterns emerge?</h3>
+    <p>Complex spatial structures can emerge from simple local rules.
+    This project investigated how diffusion, growth and nutrient
+    availability influence the formation and evolution of patterns.</p>
+    <p>Two complementary models were explored: the Gray–Scott
+    reaction–diffusion model and a Kawasaki–Murray model coupling
+    bacterial density with nutrient concentration. Python simulations
+    were used to study the influence of parameters and initial conditions.</p>`;
+
+  bacteria.Methods = `
+    <h3>Two models, two approaches</h3>
+    <h4>1. Gray–Scott: reaction and diffusion</h4>
+    <div class="bacteria-equation">
+      ∂u/∂t = Dᵤ ∇²u − uv² + F(1 − u)<br>
+      ∂v/∂t = Dᵥ ∇²v + uv² − (F + k)v
+    </div>
+    <p>The fields u and v represent two interacting species.
+    Their evolution combines diffusion, an autocatalytic reaction,
+    feed rate F and removal parameter k. This simplified chemical
+    model provides a framework for exploring pattern formation.</p>
+    <h4>2. Kawasaki–Murray: nutrients and bacterial growth</h4>
+    <div class="bacteria-equation">
+      ∂n/∂t = ∇²n − nb<br>
+      ∂b/∂t = ∇ · [σ(x) nb ∇b] + nb
+    </div>
+    <p>Here, n is the nutrient concentration and b is the bacterial
+    density. Nutrient consumption supports growth, while bacterial
+    diffusion depends on both fields. A spatially varying motility
+    coefficient σ(x) represents heterogeneity in the medium.</p>
+    <h4>Numerical approach</h4>
+    <ul>
+      <li>Two-dimensional Python simulations on a regular grid.</li>
+      <li>A five-point Laplacian for constant diffusion and a flux-based discretisation for nonlinear bacterial diffusion.</li>
+      <li>Explicit Euler time stepping and zero-flux boundary conditions.</li>
+      <li>A localised initial seed and comparisons across seed sizes, feed and removal rates, and diffusion coefficients.</li>
+    </ul>`;
+
+  bacteria.Results = `
+    <h3>From a local seed to spatial structures</h3>
+    <h4>1. Influence of the initial seed</h4>
+    <p>Starting from square seeds of different sizes, the Gray–Scott
+    simulations develop increasingly intricate structures.
+    The comparisons illustrate how the initial perturbation
+    influences the subsequent spatial organisation.</p>
+    ${result('bacteria-seed-size.png',
+      'Gray–Scott time sequences for four different initial seed sizes',
+      'Gray–Scott · Different initial seed sizes. Each row follows one simulation over time.')}
+    <h4>2. Changing feed and removal rates</h4>
+    <p>Changing F and k produces distinct outcomes: expanding regions,
+    spot-like structures and labyrinthine patterns. Some configurations
+    evolve towards nearly uniform fields, while others retain
+    a structured spatial organisation.</p>
+    ${result('bacteria-feed-kill-2.png',
+      'Gray–Scott sequences showing spots and labyrinthine structures for different F and k values',
+      'Gray–Scott · Pattern evolution for different feed and removal parameters.')}
+    <details>
+      <summary>View additional feed and removal comparisons</summary>
+      ${result('bacteria-feed-kill-1.png',
+        'Additional Gray–Scott sequences for different F and k values',
+        'Additional parameter combinations and their evolving spatial fields.')}
+    </details>
+    <h4>3. Changing diffusion coefficients</h4>
+    <p>The comparisons of Dᵤ and Dᵥ show how relative diffusion
+    changes the evolving fields. The resulting configurations
+    range from persistent fine structures to smoother or
+    more spatially uniform states.</p>
+    ${result('bacteria-diffusion.png',
+      'Gray–Scott time sequences for different diffusion coefficient combinations',
+      'Gray–Scott · Influence of the diffusion coefficients Dᵤ and Dᵥ.')}
+    <h4>4. Nutrient-coupled bacterial growth</h4>
+    <p>The Kawasaki–Murray simulation follows the expansion of
+    an initially localised colony. The sequence shows a compact
+    colony developing an irregular outline and internal variations.</p>
+    ${result('bacteria-growth.png',
+      'Bacterial colony evolution at times 20, 60, 200, 500, 1200 and 2262',
+      'Kawasaki–Murray · Colony evolution from t = 20 to t = 2262.')}
+    <p>This configuration illustrates colony growth and heterogeneity.
+    The displayed sequence does not show clearly separated
+    dendritic branches; exploring more strongly branched regimes
+    remains a direction for further investigation.</p>`;
+
+  bacteria.Conclusion = `
+    <h3>Conclusions &amp; perspectives</h3>
+    <p>The simulations illustrate how diffusion and local interactions
+    can produce a wide range of spatial structures. Their morphology
+    depends on the model, parameter choices and initial conditions.</p>
+    <ul>
+      <li>Gray–Scott provides a simple framework for exploring spots, bands and labyrinthine structures.</li>
+      <li>Kawasaki–Murray connects bacterial spreading with nutrient availability through nonlinear diffusion.</li>
+      <li>The displayed bacterial-growth simulation produces a compact, irregular colony, motivating further exploration of branching regimes.</li>
+    </ul>
+    <h4>Skills developed</h4>
+    <p>Python programming, reaction–diffusion modelling, finite
+    differences, nonlinear diffusion, parameter studies and
+    scientific visualisation.</p>
+    <h4>Further investigation</h4>
+    <p>Map pattern regimes more systematically, test sensitivity
+    to grid spacing and time step, and explore the influence
+    of nutrient levels and spatial heterogeneity on colony morphology.</p>`;
+
+  const previousRenderer = showProjectPart;
+  showProjectPart = function (part) {
+    if (activeProject !== 'bacteria') {
+      previousRenderer(part);
+      return;
+    }
+    document.querySelectorAll('[data-part]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.part === part));
+    });
+    document.getElementById('detail-content').innerHTML = bacteria[part];
+  };
+
+  if (activeProject === 'bacteria') {
+    const panel = document.querySelector('[data-panel="detail"]');
+    if (panel && !panel.hidden) openProject('bacteria');
+  }
+})();
+</script>

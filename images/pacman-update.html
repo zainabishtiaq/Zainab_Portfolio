@@ -1,0 +1,232 @@
+<style>
+  .detail[data-theme="pacman"] .tab-content h3 {
+    color: #fff1a8; font-size: 27px; margin: 0 0 16px;
+  }
+  .detail[data-theme="pacman"] .tab-content h4 {
+    color: #ffe46b; font-size: 18px; margin: 28px 0 14px;
+  }
+  .detail[data-theme="pacman"] .tab-content p { max-width: 850px; }
+  .detail[data-theme="pacman"] .tab-content li { margin: 10px 0; }
+  .pacman-code {
+    margin: 20px 0; padding: 20px; border-radius: 12px;
+    background: #0b0b16; border: 1px solid #ffe46b25;
+    color: #e2def4; overflow-x: auto; line-height: 1.7;
+    font-size: 13px; white-space: pre;
+  }
+  .pacman-code code {
+    font-family: Consolas, "Liberation Mono", monospace;
+    color: inherit; background: none;
+  }
+  .detail[data-theme="pacman"] details { margin: 22px 0; }
+  .detail[data-theme="pacman"] summary {
+    color: #ffe46b; cursor: pointer; padding: 10px 0;
+  }
+  .pacman-result {
+    max-width: 360px; margin: 24px auto; border-radius: 12px;
+    overflow: hidden; background: #fff;
+  }
+  .pacman-result img {
+    display: block; width: 100%; max-height: 380px; object-fit: contain;
+  }
+  .pacman-result figcaption {
+    background: #211b32; color: #d6d0e5;
+    padding: 12px 16px; font-size: 13px; line-height: 1.7;
+  }
+  .pacman-controls {
+    display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0;
+  }
+  .pacman-controls span {
+    padding: 10px 14px; border: 1px solid #ffe46b30;
+    border-radius: 10px; color: #e2def4; background: #ffffff05;
+  }
+  .pacman-controls kbd {
+    color: #ffe46b; font-family: monospace; margin-right: 8px;
+  }
+</style>
+
+<script>
+(function () {
+  if (typeof projects === 'undefined' || !projects.pacman) return;
+
+  function code(text) {
+    const escaped = text.trim()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    return `<pre class="pacman-code"><code>${escaped}</code></pre>`;
+  }
+
+  const snippets = {
+    entity: `TYPE individu
+   INTEGER               :: categorie
+   INTEGER, DIMENSION(2) :: pos, old_pos
+   CHARACTER             :: symbol
+END TYPE individu`,
+
+    allocation: `ALLOCATE (dom%grille(0:(dom%ng)+1,0:(dom%ng)+1), STAT=OK)
+IF (OK/=0) STOP "Erreur d'allocation : grille ou friandise"
+ALLOCATE (dom%friandise(dom%nfri), STAT=OK)
+IF (OK/=0) STOP "Erreur d'allocation : grille ou friandise"
+ALLOCATE (dom%fantome(dom%nfant), STAT=OK)
+IF (OK/=0) STOP "Erreur d'allocation : grille ou friandise"`,
+
+    placement: `DO
+   CALL RANDOM_NUMBER(r1)
+   CALL RANDOM_NUMBER(r2)
+   lin = FLOOR(r1*(dom%ng)+1)
+   col = FLOOR(r2*(dom%ng)+1)
+   IF (dom%grille(lin,col)==".") EXIT
+END DO
+dom%friandise(i)%pos=(/lin,col/)
+dom%grille(lin,col)="O"`,
+
+    movement: `CASE("e") ! Aller en haut
+   IF ((joueur%pos(1)-1)>=1) THEN
+      joueur%old_pos = joueur%pos
+      joueur%pos = (/joueur%pos(1)-1,joueur%pos(2)/)
+      nb_depl=nb_depl+1
+   END IF`,
+
+    ghosts: `CALL RANDOM_NUMBER(r)
+ale = FLOOR(r*8+1)`,
+
+    collecting: `IF (dom%grille(jrow,jcol) == "O") THEN
+   dom%nfri = dom%nfri - 1
+END IF
+dom%grille(jrow,jcol) = "@"`,
+
+    trajectory: `write(11, *)t,dom%joueur%pos(1),dom%joueur%pos(2), &
+   (dom%fantome(i)%pos(1), dom%fantome(i)%pos(2), i=1,dom%nfant)`
+  };
+
+  const pacman = projects.pacman;
+  pacman.title = 'Pac-Man in Fortran';
+  pacman.label = 'Fortran · Algorithms · Interactive programming';
+  pacman.intro = 'A terminal-based game built around structured data, keyboard input, random movement and interactions on a two-dimensional grid.';
+
+  pacman.Introduction = `
+    <h3>Turning game rules into algorithms</h3>
+    <p>This academic programming project implemented a simplified
+    Pac-Man-inspired game in Fortran. The player moves across a
+    character grid, collecting treats while avoiding randomly moving ghosts.</p>
+    <p>The objective was to translate simple game rules into an
+    organised program: represent the entities, update their positions,
+    manage interactions and determine when the game ends.</p>
+    <h4>The game at a glance</h4>
+    <ul>
+      <li><strong>@</strong> — the keyboard-controlled player.</li>
+      <li><strong>O</strong> — treats to collect.</li>
+      <li><strong>X</strong> — randomly moving ghosts.</li>
+      <li>Collect all treats to win; encountering a ghost ends the game.</li>
+    </ul>`;
+
+  pacman.Methods = `
+    <h3>Inside the implementation</h3>
+    <h4>1. Organising the game state</h4>
+    <p>The module <code>ressources</code> defines two derived types.
+    <code>individu</code> stores an entity's category, current and
+    previous positions, and display symbol. <code>domaine</code>
+    groups the player, treats, ghosts and character grid.</p>
+    ${code(snippets.entity)}
+    <details><summary>Dynamic memory allocation</summary>
+      <p>Allocatable arrays adapt the grid and entity lists to the
+      settings read from <code>donnee.dat</code>.</p>
+      ${code(snippets.allocation)}
+    </details>
+    <h4>2. Random initial placement</h4>
+    <p>Random coordinates are generated within the grid. Treats
+    and ghosts are placed only in empty cells, avoiding overlap
+    during initialisation. This excerpt shows the placement of a treat.</p>
+    ${code(snippets.placement)}
+    <h4>3. Keyboard-controlled movement</h4>
+    <p>The player routine reads input through <code>selec_get</code>
+    and selects a direction. Each move checks the grid boundary,
+    stores the previous position and increments the movement counter.</p>
+    <div class="pacman-controls">
+      <span><kbd>e</kbd>Up</span><span><kbd>l</kbd>Left</span>
+      <span><kbd>d</kbd>Down</span><span><kbd>m</kbd>Right</span>
+      <span><kbd>Space</kbd>Quit</span>
+    </div>
+    ${code(snippets.movement)}
+    <h4>4. Random ghost movement</h4>
+    <p>A random integer selects one of eight directions, including
+    diagonals. Boundary checks prevent moves outside the grid;
+    subsequent game logic handles occupied destination cells.</p>
+    ${code(snippets.ghosts)}
+    <h4>5. The game loop</h4>
+    <p>Each iteration processes player input, updates the player
+    and treats, advances the ghosts, checks interactions, records
+    positions and refreshes the display. The victory routine checks
+    whether any treats remain.</p>
+    <p>The excerpts shown here are selected sections of the source,
+    rather than standalone programs. The trajectory output below
+    is wrapped across two lines for readability.</p>`;
+
+  pacman.Results = `
+    <h3>Game behaviour &amp; recorded trajectories</h3>
+    <h4>A character-based playing field</h4>
+    <figure class="pacman-result">
+      <a href="images/pacman-grid.png" target="_blank" rel="noopener">
+        <img src="images/pacman-grid.png"
+          alt="Grid illustration with a player, treats and ghosts" loading="lazy">
+      </a>
+      <figcaption>Grid illustration from the project report.</figcaption>
+    </figure>
+    <p>The terminal display represents the player, treats and ghosts
+    using characters. It also shows the number of treats remaining.</p>
+    <h4>Collecting treats</h4>
+    <p>When the player reaches a cell containing a treat, the counter
+    decreases and the player symbol replaces it.</p>
+    ${code(snippets.collecting)}
+    <h4>Ending a game</h4>
+    <p>The program includes victory and defeat routines. Victory
+    reports the movement count; defeat also reports how many treats
+    were collected. Ghost interactions are checked during the update loop.</p>
+    <h4>Recording movement</h4>
+    <p>The file <code>traj.res</code> stores the iteration index and
+    the positions of the player and every ghost. These records
+    support subsequent trajectory visualisation with Gnuplot.</p>
+    ${code(snippets.trajectory)}
+    <h4>Development challenges</h4>
+    <p>Debugging focused on maintaining a consistent grid display,
+    keeping ghosts inside the playing field and preventing them
+    from removing treats. Separating tasks into subroutines helped
+    isolate and understand these issues.</p>`;
+
+  pacman.Conclusion = `
+    <h3>What this project taught me</h3>
+    <p>This project developed my ability to translate rules into
+    algorithms and organise a Fortran program around clear data
+    structures and subroutines. It also made debugging a central
+    part of the development process.</p>
+    <h4>Skills developed</h4>
+    <ul>
+      <li>Fortran modules, derived types and allocatable arrays.</li>
+      <li>Conditional logic, loops and random-number generation.</li>
+      <li>Keyboard input, grid updates and entity interactions.</li>
+      <li>File input/output and trajectory recording.</li>
+    </ul>
+    <h4>Possible improvements</h4>
+    <p>Test collision and no-input cases more systematically,
+    ensure terminal settings are restored on every exit, and
+    extend the game with obstacles, difficulty levels or
+    more strategic ghost movement.</p>`;
+
+  const previousRenderer = showProjectPart;
+  showProjectPart = function (part) {
+    if (activeProject !== 'pacman') {
+      previousRenderer(part);
+      return;
+    }
+    document.querySelectorAll('[data-part]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.part === part));
+    });
+    document.getElementById('detail-content').innerHTML = pacman[part];
+  };
+
+  if (activeProject === 'pacman') {
+    const panel = document.querySelector('[data-panel="detail"]');
+    if (panel && !panel.hidden) openProject('pacman');
+  }
+})();
+</script>

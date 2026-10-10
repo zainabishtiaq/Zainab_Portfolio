@@ -1,0 +1,3612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zainab's Portfolio</title>
+
+  <style>
+    /* ================= GENERAL ================= */
+
+    :root {
+      color-scheme: dark;
+      --accent: #edbe94;
+      --text: #eef0f6;
+      --muted: #bac5d6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #080d18;
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .container {
+      width: min(1120px, 100%);
+      margin: auto;
+      padding: 0 36px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Georgia, serif;
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin: 0 0 26px;
+    }
+
+    h1 em {
+      color: #edbe94;
+      font-weight: normal;
+    }
+
+    h2 {
+      font-size: clamp(34px, 4vw, 50px);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin: 0 0 20px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      line-height: 1.8;
+      margin: 0 0 20px;
+    }
+
+    .lead {
+      font-size: 17px;
+      line-height: 1.85;
+      color: #e0e6ef;
+      max-width: 650px;
+    }
+
+    .intro {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 670px;
+    }
+
+    .section {
+      padding: 55px 0;
+      min-height: 560px;
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      border: 0;
+      border-radius: 8px;
+      padding: 14px 22px;
+      background: var(--accent);
+      color: #15202a;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    /* ================= NAVIGATION ================= */
+
+    header {
+      background: #0b101b;
+      border-bottom: 1px solid #ffffff15;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 88px;
+    }
+
+    .brand {
+      font-family: Georgia, serif;
+      font-size: 25px;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      color: #edbe94;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    nav button {
+      border: 0;
+      background: transparent;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: #bac5d6;
+      font-size: 14px;
+    }
+
+    nav button[aria-pressed="true"] {
+      color: #edbe94;
+      background: #ffffff0a;
+    }
+
+    /* ================= ABOUT ME ================= */
+
+    .home {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 76px 0 35px;
+      background:
+        radial-gradient(
+          ellipse at 85% 12%,
+          #67487855,
+          transparent 48%
+        ),
+        radial-gradient(
+          ellipse at 72% 88%,
+          #d2925444,
+          transparent 45%
+        ),
+        linear-gradient(
+          140deg,
+          #080e1d,
+          #17253b 60%,
+          #231625
+        );
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: .45;
+      background-image:
+        radial-gradient(
+          circle,
+          #ffffffa0 1px,
+          transparent 1.5px
+        ),
+        radial-gradient(
+          circle,
+          #ffffff60 1px,
+          transparent 1.5px
+        );
+      background-size: 93px 101px, 163px 139px;
+      background-position: 18px 10px, 55px 60px;
+    }
+
+    .orbit {
+      position: absolute;
+      right: -190px;
+      top: -190px;
+      width: 700px;
+      height: 700px;
+      border: 1px solid #edbe9430;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .orbit::after {
+      content: "";
+      position: absolute;
+      inset: 55px;
+      border: 1px solid #edbe941a;
+      border-radius: 50%;
+    }
+
+    .horizon {
+      position: absolute;
+      left: 12%;
+      bottom: -640px;
+      width: 1400px;
+      height: 680px;
+      border-radius: 50%;
+      background: #0b111b;
+      box-shadow:
+        0 -4px 12px #ffd6ad,
+        0 -14px 60px #c97a5d80,
+        0 -35px 90px #3f83b35c;
+      z-index: -1;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1.5fr .8fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .aviation-art {
+      position: relative;
+      min-height: 310px;
+      display: grid;
+      place-items: center;
+    }
+
+    .flight-ring {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border: 1px solid #edbe9435;
+      border-radius: 50%;
+      transform: rotate(-25deg);
+    }
+
+    .flight-ring::before {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 1px dashed #edbe9425;
+      border-radius: 50%;
+    }
+
+    .aircraft {
+      color: #edbe94;
+      font-size: 140px;
+      line-height: 1;
+      transform: rotate(-25deg);
+      text-shadow: 0 0 60px #edbe9440;
+    }
+
+    .aviation-label {
+      position: absolute;
+      bottom: 10px;
+      color: #c9b09d;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-align: center;
+    }
+
+    .home-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      margin-top: 70px;
+      padding-top: 22px;
+      border-top: 1px solid #ffffff20;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #bec8d8;
+    }
+
+    .home-footer p {
+      max-width: 650px;
+      margin: 0;
+    }
+
+    .home-footer span {
+      color: #edbe94;
+      white-space: nowrap;
+    }
+
+    /* ================= TABS ================= */
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      border-bottom: 1px solid #ffffff20;
+      margin-top: 25px;
+    }
+
+    .tabs button {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: 12px 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tabs button[aria-pressed="true"] {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-content {
+      padding: 24px 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.85;
+      min-height: 110px;
+    }
+
+    .tab-content p {
+      margin-top: 0;
+    }
+
+    /* ================= INTERNSHIP ================= */
+
+    .internship {
+      --accent: #b9db92;
+      --muted: #bdcfc2;
+      background:
+        radial-gradient(
+          ellipse at 85% 15%,
+          #5c9e3c28,
+          transparent 55%
+        ),
+        linear-gradient(
+          135deg,
+          #101e18,
+          #192d22
+        );
+    }
+
+    .bio-content {
+      padding-top: 26px;
+      line-height: 1.85;
+      color: #c5d7c7;
+    }
+
+    .bio-content h3 {
+      color: #edf4e8;
+      font-size: 28px;
+      margin: 0 0 16px;
+    }
+
+    .bio-content h4 {
+      color: #b9db92;
+      font-size: 17px;
+      margin: 26px 0 12px;
+    }
+
+    .bio-content p {
+      max-width: 850px;
+    }
+
+    .bio-figure {
+      width: 100%;
+      max-width: 720px;
+      margin: 24px auto;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .bio-figure a {
+      display: block;
+    }
+
+    .bio-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 380px;
+      object-fit: contain;
+      padding: 12px;
+    }
+
+    .bio-figure figcaption {
+      background: #102219;
+      color: #c5d7c7;
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .bio-note {
+      padding: 18px 22px;
+      background: #b9db9210;
+      border-left: 3px solid #b9db92;
+      margin: 24px 0;
+    }
+
+    .bio-docs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 22px 0;
+    }
+
+    .bio-docs a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 12px 18px;
+      background: #b9db92;
+      color: #15251b;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .internship details {
+      margin-top: 25px;
+    }
+
+    .internship summary {
+      cursor: pointer;
+      color: #b9db92;
+      padding: 12px 0;
+    }
+
+    .bio-content ul {
+      padding-left: 22px;
+    }
+
+    .bio-content li {
+      margin: 12px 0;
+    }
+
+    /* ================= PROJECTS ================= */
+
+    .projects {
+      background: #101521;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 35px;
+    }
+
+    .project-card {
+      width: 100%;
+      padding: 0;
+      text-align: left;
+      border: 1px solid #ffffff20;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #171d2b;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: #edbe9480;
+    }
+
+    .card-image {
+      height: 190px;
+      overflow: hidden;
+      background: #111827;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-image.naca img {
+      object-fit: contain;
+      background: #eef2f6;
+    }
+
+    .card-image.bacteria img {
+      object-position: center 42%;
+    }
+
+    .card-image.pacman img {
+      object-fit: contain;
+      background: #000;
+    }
+
+    .card-copy {
+      display: block;
+      padding: 24px;
+    }
+
+    .card-copy small {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #b7c2d3;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .card-copy strong {
+      display: block;
+      font-family: Georgia, serif;
+      font-weight: normal;
+      font-size: 27px;
+      margin-bottom: 12px;
+    }
+
+    .card-description {
+      display: block;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #bcc7d8;
+    }
+
+    .card-link {
+      display: block;
+      margin-top: 20px;
+      color: #edbe94;
+      font-size: 13px;
+    }
+
+    .particle-art {
+      background-color: #172b23;
+      background-image:
+        radial-gradient(
+          circle,
+          #a4cc82 2px,
+          transparent 3px
+        ),
+        radial-gradient(
+          circle,
+          #c9e3b7 2px,
+          transparent 4px
+        ),
+        radial-gradient(
+          circle,
+          #7ba467 3px,
+          transparent 4px
+        );
+      background-size: 53px 61px, 77px 45px, 89px 78px;
+      background-position: 0 0, 25px 18px, 40px 30px;
+    }
+
+    /* ================= PROJECT THEMES ================= */
+
+    .detail[data-theme="naca"] {
+      --accent: #f4be8b;
+      --muted: #c5cedd;
+      background:
+        radial-gradient(
+          ellipse at 85% 0%,
+          #b9514535,
+          transparent 55%
+        ),
+        linear-gradient(
+          135deg,
+          #142640,
+          #282027
+        );
+    }
+
+    .detail[data-theme="waves"] {
+      --accent: #d4dfe7;
+      --muted: #c3ccd3;
+      background: linear-gradient(
+        135deg,
+        #30363d,
+        #141a21
+      );
+    }
+
+    .detail[data-theme="bacteria"],
+    .detail[data-theme="particles"] {
+      --accent: #b9db92;
+      --muted: #c4d3c5;
+      background:
+        radial-gradient(
+          ellipse at 85% 0%,
+          #608c3b30,
+          transparent 55%
+        ),
+        #14271e;
+    }
+
+    .detail[data-theme="pacman"] {
+      --accent: #ffe46b;
+      --muted: #c7c6df;
+      background:
+        radial-gradient(
+          ellipse at 85% 0%,
+          #59368b40,
+          transparent 55%
+        ),
+        #141222;
+    }
+
+    .back-button {
+      background: transparent;
+      border: 0;
+      padding: 0 0 20px;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .feature-image {
+      max-width: 720px;
+      margin: 28px auto;
+      border: 1px solid #ffffff20;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0b1017;
+    }
+
+    .feature-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      object-fit: contain;
+    }
+
+    .feature-image figcaption {
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .detail[data-theme="naca"] .feature-image img {
+      background: #eef2f6;
+    }
+
+    /* ================= CONTACT ================= */
+
+    .contact {
+      background:
+        radial-gradient(
+          ellipse at 85% 100%,
+          #6a3b5540,
+          transparent 65%
+        ),
+        #111726;
+    }
+
+    .contact-row {
+      padding: 28px 0;
+      border-top: 1px solid #ffffff20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .contact-row h3 {
+      font-size: 26px;
+      margin: 0 0 10px;
+    }
+
+    .contact-row p {
+      margin: 0;
+      color: #bac5d6;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .pending {
+      color: #d3b59c;
+      font-size: 13px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      padding: 22px 0;
+      background: #090e17;
+      font-size: 12px;
+      color: #9daac0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 720px) {
+      .container {
+        padding: 0 24px;
+      }
+
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 22px;
+        padding-bottom: 18px;
+        gap: 12px;
+      }
+
+      nav {
+        gap: 0;
+      }
+
+      nav button {
+        padding: 9px 10px;
+        font-size: 13px;
+      }
+
+      .home {
+        padding-top: 45px;
+      }
+
+      .home-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .aviation-art {
+        min-height: 240px;
+      }
+
+      .flight-ring {
+        width: 200px;
+        height: 200px;
+      }
+
+      .aircraft {
+        font-size: 110px;
+      }
+
+      .home-footer {
+        margin-top: 45px;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 38px 0;
+      }
+
+      .tabs button {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+
+      .contact-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .bio-figure img {
+        max-height: 280px;
+        padding: 6px;
+      }
+
+      .feature-image img {
+        max-height: 260px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card {
+        transition: none;
+      }
+
+      .project-card:hover {
+        transform: none;
+      }
+    }
+  </style>
+
+  <style>
+  .home .portfolio-title {
+    font-size: clamp(36px, 4.5vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin: 0 0 18px;
+  }
+
+  .home .portfolio-subtitle {
+    font-family: Georgia, serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    line-height: 1.5;
+    color: #dce3ef;
+    margin: 0 0 28px;
+  }
+
+  .home .portfolio-subtitle em {
+    color: #edbe94;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+  <!-- ================= NAVIGATION ================= -->
+
+  <header>
+    <div class="container header-inner">
+
+      <div class="brand">
+        Zainab<span>'s</span> Portfolio<span>.</span>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <button
+          type="button"
+          data-page="home"
+          aria-pressed="true"
+        >
+          About me
+        </button>
+
+        <button
+          type="button"
+          data-page="internship"
+          aria-pressed="false"
+        >
+          Internship
+        </button>
+
+        <button
+          type="button"
+          data-page="projects"
+          aria-pressed="false"
+        >
+          Projects
+        </button>
+
+        <button
+          type="button"
+          data-page="contact"
+          aria-pressed="false"
+        >
+          CV &amp; Contact
+        </button>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= ABOUT ME ================= -->
+
+    <section class="home" data-panel="home">
+
+      <div class="stars" aria-hidden="true"></div>
+      <div class="orbit" aria-hidden="true"></div>
+      <div class="horizon" aria-hidden="true"></div>
+
+      <div class="container">
+
+        <div class="home-grid">
+
+          <div>
+            <p class="eyebrow">
+              Fluid mechanics · Aerodynamics
+            </p>
+
+            <h1 class="portfolio-title">Zainab's Portfolio</h1>
+
+<p class="portfolio-subtitle">
+  Fascinated by flight.<br>
+  <em>Driven by curiosity.</em>
+</p>
+
+            <p class="lead">
+              I am a second-year master’s student in fluid mechanics,
+              specialising in aerodynamics. Fascinated by aircraft
+              and the physics of flight, I am passionate about aviation,
+              space and the technologies that make exploration possible.
+            </p>
+
+            <p class="intro">
+              Understanding how air flows around an aircraft — and how
+              this knowledge shapes its design — is what inspires my
+              ambition to pursue a career in aerospace engineering.
+            </p>
+
+            <button
+              class="primary-button"
+              type="button"
+              data-page="internship"
+            >
+              Explore my work
+              <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+
+          <div class="aviation-art" aria-hidden="true">
+            <div class="flight-ring"></div>
+            <span class="aircraft">✈</span>
+            <span class="aviation-label">
+              AVIATION · SPACE · EXPLORATION
+            </span>
+          </div>
+
+        </div>
+
+        <div class="home-footer">
+          <p>
+            A selection of academic projects and research experiences
+            from my studies: the questions explored, the methods used
+            and the results obtained.
+          </p>
+
+          
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= INTERNSHIP ================= -->
+
+    <section
+      class="section internship"
+      data-panel="internship"
+      hidden
+    >
+      <div class="container">
+
+        <p class="eyebrow">
+          Research experience · Bioconvection
+        </p>
+
+        <h2>
+          Phototactic algae.<br>
+          From plumes to a roll.
+        </h2>
+
+        <div class="tabs" aria-label="Bioconvection sections">
+
+          <button
+            type="button"
+            data-bio-view="overview"
+            aria-pressed="true"
+          >
+            Overview
+          </button>
+
+          <button
+            type="button"
+            data-bio-view="dark"
+            aria-pressed="false"
+          >
+            1. Without light
+          </button>
+
+          <button
+            type="button"
+            data-bio-view="light"
+            aria-pressed="false"
+          >
+            2. Light response
+          </button>
+
+          <button
+            type="button"
+            data-bio-view="roll"
+            aria-pressed="false"
+          >
+            3. Plumes to a roll
+          </button>
+
+          <button
+            type="button"
+            data-bio-view="conclusion"
+            aria-pressed="false"
+          >
+            Conclusions
+          </button>
+
+          <button
+            type="button"
+            data-bio-view="documents"
+            aria-pressed="false"
+          >
+            Poster
+          </button>
+
+        </div>
+
+        <div
+          class="bio-content"
+          id="bio-stage-content"
+          aria-live="polite"
+        ></div>
+
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+
+    <section
+      class="section projects"
+      data-panel="projects"
+      hidden
+    >
+      <div class="container">
+
+        <p class="eyebrow">
+          Academic work · Selected projects
+        </p>
+
+        <h2>
+          Different questions.<br>
+          One scientific curiosity.
+        </h2>
+
+        <p class="intro">
+          Explore each project through its own visual world,
+          from aerodynamics to waves and biological patterns.
+        </p>
+
+        <div class="project-grid">
+
+          <!-- NACA -->
+
+          <button
+            class="project-card"
+            type="button"
+            data-project="naca"
+          >
+            <div class="card-image naca">
+              <img
+                src="images/naca.png"
+                alt="Mesh around a NACA airfoil"
+                loading="lazy"
+              >
+            </div>
+
+            <span class="card-copy">
+              <small>Aerodynamics · CFD</small>
+              <strong>NACA 0012 airfoil</strong>
+
+              <span class="card-description">
+                Flow around an airfoil, pressure fields
+                and aerodynamic behaviour.
+              </span>
+
+              <span class="card-link">
+                Explore project ↗
+              </span>
+            </span>
+          </button>
+
+          <!-- WAVES -->
+
+          <button
+            class="project-card"
+            type="button"
+            data-project="waves"
+          >
+            <div class="card-image">
+              <img
+                src="images/waves.png"
+                alt="Water droplet creating ripples"
+                loading="lazy"
+              >
+            </div>
+
+            <span class="card-copy">
+              <small>Waves · Numerical modelling</small>
+              <strong>Waves in a lake</strong>
+
+              <span class="card-description">
+                Wave propagation, boundary conditions
+                and interaction with an obstacle.
+              </span>
+
+              <span class="card-link">
+                Explore project ↗
+              </span>
+            </span>
+          </button>
+
+          <!-- BACTERIAL PATTERNS -->
+
+          <button
+            class="project-card"
+            type="button"
+            data-project="bacteria"
+          >
+            <div class="card-image bacteria">
+              <img
+                src="images/bacteria.png"
+                alt="Microscope and microorganism illustration"
+                loading="lazy"
+              >
+            </div>
+
+            <span class="card-copy">
+              <small>Reaction–diffusion · Modelling</small>
+              <strong>Bacterial patterns</strong>
+
+              <span class="card-description">
+                The emergence of spatial patterns
+                explored through numerical models.
+              </span>
+
+              <span class="card-link">
+                Explore project ↗
+              </span>
+            </span>
+          </button>
+
+          
+
+          <!-- PAC-MAN -->
+
+          <button
+            class="project-card"
+            type="button"
+            data-project="pacman"
+          >
+            <div class="card-image pacman">
+              <img
+                src="images/pacman.png"
+                alt="Pac-Man with colourful ghosts"
+                loading="lazy"
+              >
+            </div>
+
+            <span class="card-copy">
+              <small>Programming · Fortran</small>
+              <strong>Pac-Man in Fortran</strong>
+
+              <span class="card-description">
+                A programming project to present through
+                its implementation and gameplay.
+              </span>
+
+              <span class="card-link">
+                Explore project ↗
+              </span>
+            </span>
+          </button>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECT DETAILS ================= -->
+
+    <section
+      class="section detail"
+      data-panel="detail"
+      data-theme="naca"
+      hidden
+    >
+      <div class="container">
+
+        <button
+          class="back-button"
+          type="button"
+          data-page="projects"
+        >
+          ← All projects
+        </button>
+
+        <p class="eyebrow" id="detail-label"></p>
+        <h2 id="detail-title"></h2>
+        <p class="intro" id="detail-intro"></p>
+
+        <figure class="feature-image" id="detail-figure">
+          <img id="detail-image" alt="">
+          <figcaption id="detail-caption"></figcaption>
+        </figure>
+
+        <div class="tabs" aria-label="Project sections">
+
+          <button
+            type="button"
+            data-part="Introduction"
+            aria-pressed="true"
+          >
+            Introduction
+          </button>
+
+          <button
+            type="button"
+            data-part="Methods"
+            aria-pressed="false"
+          >
+            Methods
+          </button>
+
+          <button
+            type="button"
+            data-part="Results"
+            aria-pressed="false"
+          >
+            Results
+          </button>
+
+          <button
+            type="button"
+            data-part="Conclusion"
+            aria-pressed="false"
+          >
+            Conclusion
+          </button>
+
+        </div>
+
+        <div
+          class="tab-content"
+          id="detail-content"
+          aria-live="polite"
+        ></div>
+
+      </div>
+    </section>
+
+    <!-- ================= CV / CONTACT ================= -->
+
+    <section
+      class="section contact"
+      data-panel="contact"
+      hidden
+    >
+      <div class="container">
+
+        <p class="eyebrow">
+          CV &amp; Contact
+        </p>
+
+        <h2>Let’s connect.</h2>
+
+        <p class="intro">
+          Interested in aerodynamics, fluid mechanics
+          and opportunities in aviation and space.
+        </p>
+
+        <div class="contact-row">
+          <div>
+            <h3>Curriculum vitae</h3>
+            <p>Education, skills and experience.</p>
+          </div>
+
+          <span class="pending">
+            CV to be added
+          </span>
+        </div>
+
+        <div class="contact-row">
+          <div>
+            <h3>Get in touch</h3>
+            <p>Email and professional links.</p>
+          </div>
+
+          <div>
+  <a href="mailto:zainabishtiaqpro@gmail.com">zainabishtiaqpro@gmail.com</a>
+  <br><br>
+  <a href="https://www.linkedin.com/in/zainab-ishtiaq09" target="_blank" rel="noopener">
+    LinkedIn
+  </a>
+</div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+    <div class="container footer-inner">
+      <span>Zainab’s Portfolio</span>
+
+      <span>
+        Fluid mechanics · Aerodynamics 
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    /* ================= NAVIGATION ================= */
+
+    const panels = document.querySelectorAll("[data-panel]");
+    const navigation = document.querySelectorAll("nav [data-page]");
+
+    function showPage(page) {
+      panels.forEach(panel => {
+        panel.hidden = panel.dataset.panel !== page;
+      });
+
+      const selectedPage = page === "detail" ? "projects" : page;
+
+      navigation.forEach(button => {
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.page === selectedPage)
+        );
+      });
+
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", () => {
+        showPage(button.dataset.page);
+      });
+    });
+
+    /* ================= INTERNSHIP FIGURES ================= */
+
+    function bioFigure(file, alt, caption = "") {
+      return `
+        <figure class="bio-figure">
+
+          <a
+            href="images/${file}"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="images/${file}"
+              alt="${alt}"
+              loading="lazy"
+            >
+          </a>
+
+          <figcaption>${caption}</figcaption>
+
+        </figure>
+      `;
+    }
+
+    /* ================= INTERNSHIP CONTENT ================= */
+
+    const bioViews = {
+
+      overview: `
+        <h3>Objective &amp; research context</h3>
+
+        <p>
+          Phototactic algae orient their swimming in response to light.
+          Their collective motion and the resulting concentration
+          gradients interact with the surrounding fluid, producing
+          bioconvective plumes.
+        </p>
+
+        <p>
+          The objective was to analyse numerically how system parameters
+          and lateral illumination influence plume organisation,
+          up to the formation of a large-scale hydrodynamic roll.
+        </p>
+
+        ${bioFigure(
+          "bio-setup.png",
+          "Experimental setup with lateral illumination",
+          "Experimental setup: an algae suspension exposed to lateral illumination."
+        )}
+
+        <h4>Numerical approach</h4>
+
+        <p>
+          Simulations were carried out using Basilisk, with flow
+          visualisations in ParaView. The investigation considered
+          constant and variable viscosity, algal swimming speed Va,
+          wall boundary conditions, tank height and the response
+          to lateral illumination.
+        </p>
+
+        ${bioFigure(
+          "bio-plumes.png",
+          "ParaView visualisation of bioconvective plumes",
+          "Bioconvective plumes visualised in ParaView."
+        )}
+      `,
+
+      dark: `
+        <h3>1. Without light: influence of Va</h3>
+
+        <p>
+          The initial algal swimming speed Va was varied to examine
+          changes in plume number and mean spacing.
+          Constant and variable viscosity cases were compared.
+        </p>
+
+        ${bioFigure(
+          "bio-va.png",
+          "Plume number and mean spacing versus algal swimming speed",
+          "Influence of algal swimming speed on plume number and mean spacing."
+        )}
+
+        <p>
+          Across much of the investigated range, increasing Va is
+          associated with more plumes and smaller mean spacing.
+          The trend is not strictly monotonic, and the high-Va case
+          must also be assessed spatially.
+        </p>
+
+        ${bioFigure(
+          "bio-va16.png",
+          "Irregular plume spacing at Va equals 16",
+          "At Va = 16, plume spacing becomes irregular across the tank."
+        )}
+
+        <div class="bio-note">
+          At Va = 16, plumes are more closely spaced near the walls
+          and farther apart in the central region. A single mean
+          spacing therefore does not fully describe their arrangement.
+        </div>
+      `,
+
+      light: `
+        <h3>2. Response to lateral illumination</h3>
+
+        <p>
+          The response was analysed before and after switching on
+          the light, comparing regions at different distances
+          from the illuminated wall.
+        </p>
+
+        ${bioFigure(
+          "bio-light-time.png",
+          "Evolution of phototactic alignment before and after illumination",
+          "Phototactic alignment before and after light activation at t = 2 s."
+        )}
+
+        <p>
+          Before illumination, mean phototactic alignment remains
+          close to zero. After activation, alignment rises rapidly,
+          reaching larger values in the more strongly illuminated region.
+        </p>
+
+        ${bioFigure(
+          "bio-light-zones.png",
+          "Mean orientation and light intensity across three regions",
+          "Mean algal orientation and light intensity across three regions of the tank."
+        )}
+
+        <p>
+          Mean orientation increases from approximately 0.54 in the
+          distant region to 0.79 in the intermediate region and
+          0.95 near the light.
+        </p>
+      `,
+
+      roll: `
+        <h3>3. From plumes to a hydrodynamic roll</h3>
+
+        <p>
+          Lateral illumination changes algal orientation and
+          redistributes concentration. The spatial profiles and
+          temporal evolution describe the progressive organisation
+          of the flow.
+        </p>
+
+        ${bioFigure(
+          "bio-profile.png",
+          "Spatial profiles of algae concentration and orientation at t equals 5 seconds",
+          "Algae concentration and orientation towards the light at t = 5 s."
+        )}
+
+        ${bioFigure(
+          "bio-roll-growth.png",
+          "Maximum concentration in the roll during plume absorption",
+          "Maximum algae concentration in the roll during successive plume absorption."
+        )}
+
+        <p>
+          The maximum concentration within the roll increases as
+          successive plumes are absorbed. Together with the spatial
+          profiles, this illustrates the redistribution of algae
+          accompanying the formation of a large-scale roll.
+        </p>
+
+        <details>
+          <summary>
+            Additional result: shear and plume absorption
+          </summary>
+
+          ${bioFigure(
+            "bio-shear.png",
+            "Plume absorption time versus initial local shear",
+            "Relationship between local shear rate and plume absorption time."
+          )}
+
+          <p>
+            In the analysed data, higher initial local shear is
+            associated with shorter plume absorption times.
+          </p>
+        </details>
+      `,
+
+      conclusion: `
+        <h3>Conclusions &amp; perspectives</h3>
+
+        <ul>
+          <li>
+            <strong>Without illumination:</strong>
+            Va affects plume number and spacing, with spatial
+            irregularity observed at Va = 16.
+          </li>
+
+          <li>
+            <strong>With lateral illumination:</strong>
+            algae rapidly reorient, with stronger alignment
+            closer to the light.
+          </li>
+
+          <li>
+            <strong>Plume-to-roll transition:</strong>
+            redistribution and absorption of plumes accompany
+            concentration accumulation in the roll.
+          </li>
+        </ul>
+
+        <h4>Account for the meniscus</h4>
+
+        <p>
+          Represent free-surface deformation and capillary effects
+          through a dynamic pressure condition related to interface
+          curvature (Laplace pressure), to examine their influence
+          on near-surface flow and plume organisation.
+        </p>
+
+        <h4>Extend the simulations from 2D to 3D</h4>
+
+        <p>
+          Capture out-of-plane vortical structures and move closer
+          to the geometry of the experimental setup.
+        </p>
+      `,
+
+      documents: `
+        <h3>Poster </h3>
+
+        <p>
+          The original document is available in French.
+        </p>
+
+        <div class="bio-docs">
+
+          <a
+            href="documents/bioconvection-poster.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            Open poster PDF ↗
+          </a>
+
+         
+
+        </div>
+
+        ${bioFigure(
+          "bio-poster.png",
+          "Complete poster on phototactic algae bioconvection",
+          "Bioconvection of phototactic algae — research poster."
+        )}
+      `
+    };
+
+    const bioContent = document.getElementById("bio-stage-content");
+
+    function showBioView(view) {
+      document.querySelectorAll("[data-bio-view]").forEach(button => {
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.bioView === view)
+        );
+      });
+
+      bioContent.innerHTML = bioViews[view];
+    }
+
+    document.querySelectorAll("[data-bio-view]").forEach(button => {
+      button.addEventListener("click", () => {
+        showBioView(button.dataset.bioView);
+      });
+    });
+
+    showBioView("overview");
+
+    /* ================= PROJECT CONTENT ================= */
+
+    const projects = {
+
+      naca: {
+        title: "NACA 0012 airfoil",
+        label: "Aerodynamics · CFD",
+        image: "images/naca.png",
+        alt: "Mesh around a NACA airfoil",
+        caption: "NACA airfoil and computational mesh.",
+
+        intro:
+          "Exploring flow around a symmetric airfoil through numerical " +
+          "simulation and the analysis of pressure and aerodynamic forces.",
+
+        Introduction:
+          "The project objectives, research questions, airfoil geometry " +
+          "and flow conditions will be presented here.",
+
+        Methods:
+          "The mesh, boundary conditions, solver settings " +
+          "and convergence checks will be explained here.",
+
+        Results:
+          "The original pressure fields, pressure coefficient curves " +
+          "and aerodynamic results will be added here.",
+
+        Conclusion:
+          "The main findings, limitations and perspectives " +
+          "of the project will be presented here."
+      },
+
+      waves: {
+        title: "Waves in a lake",
+        label: "Wave propagation · Numerical modelling",
+        image: "images/waves.png",
+        alt: "Water droplet creating ripples",
+        caption: "Surface ripples — project cover image.",
+
+        intro:
+          "A numerical exploration of wave propagation, absorbing boundaries " +
+          "and the interaction between waves and an obstacle.",
+
+        Introduction:
+          "The physical setting and the questions investigated " +
+          "in this project will be introduced here.",
+
+        Methods:
+          "The wave equation, finite-difference scheme " +
+          "and boundary conditions will be presented here.",
+
+        Results:
+          "The original simulation snapshots, observations " +
+          "and comparisons will be added here.",
+
+        Conclusion:
+          "The observations and limitations of the simplified " +
+          "wave model will be discussed here."
+      },
+
+      bacteria: {
+        title: "Bacterial patterns",
+        label: "Reaction–diffusion · Numerical modelling",
+        image: "images/bacteria.png",
+        alt: "Microscope and microorganism illustration",
+        caption: "Microscopy-inspired project cover.",
+
+        intro:
+          "Exploring the emergence of spatial patterns through " +
+          "reaction–diffusion and bacterial growth models.",
+
+        Introduction:
+          "The scientific context and questions behind " +
+          "spatial pattern formation will be introduced here.",
+
+        Methods:
+          "The Gray–Scott and Kawasaki–Murray models, numerical approach " +
+          "and parameters investigated will be presented here.",
+
+        Results:
+          "The original numerical patterns and parameter " +
+          "comparisons will be added here.",
+
+        Conclusion:
+          "The numerical observations and limitations " +
+          "of the models will be discussed here."
+      },
+
+      
+
+      pacman: {
+        title: "Pac-Man in Fortran",
+        label: "Programming · Fortran",
+        image: "images/pacman.png",
+        alt: "Pac-Man with colourful ghosts",
+        caption: "Pac-Man — project cover image.",
+
+        intro:
+          "A programming project developed in Fortran, " +
+          "to be presented through its code and gameplay.",
+
+        Introduction:
+          "The project objectives and the game features " +
+          "will be introduced here.",
+
+        Methods:
+          "The program structure and implementation " +
+          "will be explained here.",
+
+        Results:
+          "Gameplay screenshots or a demonstration " +
+          "will be added here.",
+
+        Conclusion:
+          "The programming skills developed, challenges " +
+          "and possible improvements will be discussed here."
+      }
+    };
+
+    let activeProject = "naca";
+
+    function showProjectPart(part) {
+      document.querySelectorAll("[data-part]").forEach(button => {
+        button.setAttribute(
+          "aria-pressed",
+          String(button.dataset.part === part)
+        );
+      });
+
+      document.getElementById("detail-content").textContent =
+        projects[activeProject][part];
+    }
+
+    function openProject(key) {
+      activeProject = key;
+
+      const project = projects[key];
+      const detailPanel =
+        document.querySelector('[data-panel="detail"]');
+
+      detailPanel.dataset.theme = key;
+
+      document.getElementById("detail-title").textContent =
+        project.title;
+
+      document.getElementById("detail-label").textContent =
+        project.label;
+
+      document.getElementById("detail-intro").textContent =
+        project.intro;
+
+      const figure = document.getElementById("detail-figure");
+      const image = document.getElementById("detail-image");
+
+      figure.hidden = !project.image;
+
+      if (project.image) {
+        image.src = project.image;
+        image.alt = project.alt;
+
+        document.getElementById("detail-caption").textContent =
+          project.caption;
+      } else {
+        image.removeAttribute("src");
+        image.alt = "";
+
+        document.getElementById("detail-caption").textContent = "";
+      }
+
+      showProjectPart("Introduction");
+      showPage("detail");
+    }
+
+    document.querySelectorAll("[data-project]").forEach(button => {
+      button.addEventListener("click", () => {
+        openProject(button.dataset.project);
+      });
+    });
+
+    document.querySelectorAll("[data-part]").forEach(button => {
+      button.addEventListener("click", () => {
+        showProjectPart(button.dataset.part);
+      });
+    });
+  </script>
+
+
+<style>
+  /* ---------- DESIGN DE LA RUBRIQUE NACA ---------- */
+
+  .detail[data-theme="naca"] .tab-content h3 {
+    color: #f1e6dc;
+    font-size: 27px;
+    margin: 0 0 16px;
+  }
+
+  .detail[data-theme="naca"] .tab-content h4 {
+    color: #f4be8b;
+    font-size: 18px;
+    margin: 28px 0 14px;
+  }
+
+  .detail[data-theme="naca"] .tab-content p {
+    max-width: 850px;
+  }
+
+  .detail[data-theme="naca"] .tab-content li {
+    margin: 10px 0;
+  }
+
+  .naca-figure {
+    width: 100%;
+    max-width: 720px;
+    margin: 26px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .naca-figure a {
+    display: block;
+  }
+
+  .naca-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    object-fit: contain;
+    padding: 10px;
+  }
+
+  .naca-figure figcaption {
+    padding: 12px 16px;
+    background: #192333;
+    color: #c9d3e1;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .naca-mach-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 26px 0;
+  }
+
+  .naca-mach-grid .naca-figure {
+    margin: 0;
+  }
+
+  .naca-mach-grid .naca-figure img {
+    max-height: 230px;
+  }
+
+  .naca-case {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 22px 0;
+  }
+
+  .naca-case span {
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #ffffff08;
+    color: #efc8a5;
+    font-size: 14px;
+  }
+
+  .detail[data-theme="naca"] details {
+    margin: 25px 0;
+  }
+
+  .detail[data-theme="naca"] summary {
+    cursor: pointer;
+    padding: 12px 0;
+    color: #f4be8b;
+  }
+
+  @media (max-width: 600px) {
+    .naca-mach-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .naca-figure img {
+      max-height: 280px;
+      padding: 6px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  if (typeof projects === "undefined" || !projects.naca) return;
+
+  /* ---------- FIGURES CLIQUABLES ---------- */
+
+  function figure(file, alt, caption) {
+    return `
+      <figure class="naca-figure">
+
+        <a
+          href="images/${file}"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src="images/${file}"
+            alt="${alt}"
+            loading="lazy"
+          >
+        </a>
+
+        <figcaption>${caption}</figcaption>
+
+      </figure>
+    `;
+  }
+
+  /* ---------- PRÉSENTATION DU PROJET ---------- */
+
+  const naca = projects.naca;
+
+  naca.title = "Flow over a NACA 0012 airfoil";
+
+  naca.label = "Aerodynamics · Compressible flow · CFD";
+
+  naca.intro =
+    "From subsonic flow to transonic drag rise: exploring how Mach " +
+    "number changes the flow around a symmetric airfoil.";
+
+  naca.caption = "NACA 0012 airfoil and computational mesh.";
+
+  /* ---------- INTRODUCTION ---------- */
+
+  naca.Introduction = `
+    <h3>Understanding transonic flow</h3>
+
+    <p>
+      This project investigated compressible airflow around the
+      symmetric NACA 0012 airfoil using CFD. The study began with
+      a reference case at M∞ = 0.82, then compared flow behaviour
+      at different freestream Mach numbers.
+    </p>
+
+    <p>
+      A central question was transonic drag divergence:
+      the sharp rise in drag associated with local supersonic
+      regions and shock waves, even when the freestream
+      remains subsonic.
+    </p>
+
+    <h4>Research questions</h4>
+
+    <ul>
+      <li>
+        How does the flow around the airfoil change with
+        freestream Mach number?
+      </li>
+
+      <li>
+        How do shock waves appear in Mach and
+        pressure distributions?
+      </li>
+
+      <li>
+        How do the computed pressure distributions compare
+        with experimental references?
+      </li>
+
+      <li>
+        Which drag contribution drives the transonic drag rise?
+      </li>
+    </ul>
+  `;
+
+  /* ---------- METHODS ---------- */
+
+  naca.Methods = `
+    <h3>Numerical setup &amp; workflow</h3>
+
+    <div class="naca-case">
+      <span>M∞ = 0.82</span>
+      <span>α = 0°</span>
+      <span>Re = 6 × 10⁶</span>
+    </div>
+
+    <p>
+      The reference calculation used a symmetric airfoil
+      at zero incidence. The computational grid was refined
+      near the surface to resolve strong gradients, with
+      larger cells towards the far field.
+    </p>
+
+    ${figure(
+      "naca-mesh.png",
+      "Close-up of computational mesh refinement near the leading edge",
+      "Mesh refinement near the leading edge."
+    )}
+
+    <h4>Calculation and post-processing</h4>
+
+    <ol>
+      <li>
+        Generate and inspect the airfoil geometry
+        and computational grid.
+      </li>
+
+      <li>
+        Set freestream conditions, wall and far-field boundaries,
+        and solver parameters in RSM2D.
+      </li>
+
+      <li>
+        Monitor lift and drag coefficients over iterations
+        using Gnuplot.
+      </li>
+
+      <li>
+        Inspect Mach number, pressure and temperature
+        fields in ParaView.
+      </li>
+
+      <li>
+        Compare surface pressure coefficients with experimental
+        references and repeat calculations at different Mach numbers.
+      </li>
+    </ol>
+  `;
+
+  /* ---------- RESULTS ---------- */
+
+  naca.Results = `
+    <h3>Results &amp; physical interpretation</h3>
+
+    <h4>1. Convergence of aerodynamic coefficients</h4>
+
+    ${figure(
+      "naca-convergence.png",
+      "Lift and drag coefficients over solver iterations at Mach 0.82",
+      "Convergence of lift and drag coefficients at M∞ = 0.82."
+    )}
+
+    <p>
+      After the initial transient, the drag coefficient
+      approaches a stable value of roughly 0.03.
+      Lift settles close to zero, consistent with a symmetric
+      airfoil at zero incidence. These histories indicate
+      coefficient stabilisation during the calculation.
+    </p>
+
+    <h4>2. Surface pressure and experimental comparison</h4>
+
+    ${figure(
+      "naca-cp.png",
+      "Computed and experimental pressure coefficient distributions along the chord",
+      "Pressure coefficient Cp versus chordwise position x/c: computation and experimental references."
+    )}
+
+    <p>
+      The numerical and experimental curves show broadly similar
+      pressure distributions. The suction region is followed
+      by a sharp pressure recovery near mid-chord, consistent
+      with a shock. The experimental curves have a small
+      incidence offset, as indicated in the graph legend.
+    </p>
+
+    <h4>3. Transonic flow at M∞ = 0.82</h4>
+
+    <div class="naca-mach-grid">
+
+      ${figure(
+        "naca-mach082.png",
+        "Mach number field around the airfoil at freestream Mach 0.82",
+        "Mach number field at M∞ = 0.82."
+      )}
+
+      ${figure(
+        "naca-pressure082.png",
+        "Static pressure field around the airfoil at freestream Mach 0.82",
+        "Static pressure field at M∞ = 0.82."
+      )}
+
+    </div>
+
+    <p>
+      The airfoil accelerates the surrounding flow, producing
+      local supersonic regions. Shock-related deceleration
+      is accompanied by a sharp pressure recovery.
+      The Mach field and surface pressure distribution provide
+      complementary views of this transonic behaviour.
+    </p>
+
+    <h4>4. Influence of freestream Mach number</h4>
+
+    <div class="naca-mach-grid">
+
+      ${figure(
+        "naca-mach-050.png",
+        "Mach field for freestream Mach 0.50",
+        "M∞ = 0.50 · Subsonic flow."
+      )}
+
+      ${figure(
+        "naca-mach-074.png",
+        "Mach field for freestream Mach 0.74",
+        "M∞ = 0.74 · Increasing local acceleration."
+      )}
+
+      ${figure(
+        "naca-mach-082.png",
+        "Mach field for freestream Mach 0.82",
+        "M∞ = 0.82 · Transonic flow with local supersonic regions."
+      )}
+
+      ${figure(
+        "naca-mach-110.png",
+        "Mach field for freestream Mach 1.10",
+        "M∞ = 1.10 · Supersonic freestream with shock structures."
+      )}
+
+    </div>
+
+    <p>
+      The fields illustrate the transition from smooth subsonic
+      flow to transonic and supersonic configurations.
+      Each panel retains its own original colour scale.
+    </p>
+
+    <h4>5. Transonic drag divergence</h4>
+
+    ${figure(
+      "naca-drag.png",
+      "Total, pressure and viscous drag coefficients versus freestream Mach number",
+      "Drag coefficient versus Mach number, with pressure and viscous contributions."
+    )}
+
+    <p>
+      Drag remains relatively low at lower Mach numbers,
+      then rises sharply in the transonic range.
+      The pressure-drag contribution accounts for most of
+      this increase, while the viscous contribution
+      changes much less.
+    </p>
+
+    <details>
+      <summary>
+        Additional result: total pressure losses
+      </summary>
+
+      ${figure(
+        "naca-total-pressure.png",
+        "Total pressure field around the NACA 0012 airfoil",
+        "Total pressure field at M∞ = 0.82."
+      )}
+
+      <p>
+        The total-pressure deficit in the wake reflects
+        irreversible losses. Shocks and viscous effects
+        therefore prevent the flow from being globally isentropic.
+      </p>
+    </details>
+  `;
+
+  /* ---------- CONCLUSION ---------- */
+
+  naca.Conclusion = `
+    <h3>Conclusions &amp; perspectives</h3>
+
+    <ul>
+      <li>
+        The reference calculation gives near-zero lift
+        at zero incidence and a stabilised drag coefficient.
+      </li>
+
+      <li>
+        The pressure comparison reproduces the main
+        distribution features and shock-related pressure recovery.
+      </li>
+
+      <li>
+        Increasing Mach number changes the flow structure
+        and leads to a sharp transonic drag rise.
+      </li>
+
+      <li>
+        The increase is primarily associated with pressure drag,
+        rather than a comparable increase in viscous drag.
+      </li>
+    </ul>
+
+    <h4>Skills developed</h4>
+
+    <p>
+      CFD setup, computational mesh inspection, convergence
+      monitoring, ParaView post-processing, and interpretation
+      of compressible flow through pressure distributions
+      and aerodynamic coefficients.
+    </p>
+
+    <h4>Further investigation</h4>
+
+    <p>
+      Mesh-refinement and solver-sensitivity studies,
+      quantitative comparison with experimental data,
+      and variations in incidence and Reynolds number
+      would help assess the robustness and range
+      of the predictions.
+    </p>
+  `;
+
+  /* ---------- AFFICHAGE DES RUBRIQUES ---------- */
+
+  showProjectPart = function (part) {
+    document.querySelectorAll("[data-part]").forEach(button => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.part === part)
+      );
+    });
+
+    const content = document.getElementById("detail-content");
+
+    if (activeProject === "naca") {
+      content.innerHTML = projects.naca[part];
+    } else {
+      content.textContent = projects[activeProject][part];
+    }
+  };
+
+  if (activeProject === "naca") {
+    const panel = document.querySelector('[data-panel="detail"]');
+
+    if (panel && !panel.hidden) {
+      openProject("naca");
+    }
+  }
+
+})();
+</script>
+
+<style>
+  .detail[data-theme="waves"] .tab-content h3 {
+    color: #eff2f4;
+    font-size: 27px;
+    margin: 0 0 16px;
+  }
+
+  .detail[data-theme="waves"] .tab-content h4 {
+    color: #d4dfe7;
+    font-size: 18px;
+    margin: 28px 0 14px;
+  }
+
+  .detail[data-theme="waves"] .tab-content p {
+    max-width: 850px;
+  }
+
+  .detail[data-theme="waves"] .tab-content li {
+    margin: 10px 0;
+  }
+
+  .waves-figure {
+    width: 100%;
+    max-width: 720px;
+    margin: 26px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .waves-figure a {
+    display: block;
+  }
+
+  .waves-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 360px;
+    object-fit: contain;
+    padding: 10px;
+  }
+
+  .waves-figure figcaption {
+    padding: 12px 16px;
+    background: #202830;
+    color: #d1dae1;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .waves-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 26px 0;
+  }
+
+  .waves-gallery .waves-figure {
+    margin: 0;
+  }
+
+  .waves-gallery .waves-figure img {
+    max-height: 270px;
+  }
+
+  .waves-equation {
+    padding: 18px 22px;
+    border-left: 3px solid #bdcbd6;
+    background: #ffffff06;
+    margin: 22px 0;
+    font-size: 17px;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+
+  .detail[data-theme="waves"] details {
+    margin: 25px 0;
+  }
+
+  .detail[data-theme="waves"] summary {
+    cursor: pointer;
+    padding: 12px 0;
+    color: #d4dfe7;
+  }
+
+  @media (max-width: 600px) {
+    .waves-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .waves-figure img {
+      max-height: 280px;
+      padding: 6px;
+    }
+  }
+
+  .waves-code-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.waves-code-links a {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 4px 0;
+  color: #d4dfe7;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.waves-code-links a:hover {
+  transform: none;
+  color: #fff;
+}
+</style>
+
+<script>
+(function () {
+  if (typeof projects === "undefined" || !projects.waves) return;
+
+  function figure(file, alt, caption) {
+    return `
+      <figure class="waves-figure">
+        <a href="images/${file}" target="_blank" rel="noopener">
+          <img
+            src="images/${file}"
+            alt="${alt}"
+            loading="lazy"
+          >
+        </a>
+        <figcaption>${caption}</figcaption>
+      </figure>
+    `;
+  }
+
+  const waves = projects.waves;
+
+  waves.title = "Waves in a lake";
+  waves.label = "Wave propagation · Numerical methods · Python";
+
+  waves.intro =
+    "From a local disturbance to wave–obstacle interaction: modelling, observing and improving a two-dimensional wave simulation.";
+
+  waves.caption = "Surface ripples — project cover image.";
+
+  waves.Introduction = `
+  <h3>From a falling stone to propagating waves</h3>
+
+  <p>
+    A stone falling into water creates ripples that spread
+    across the surface. This project explores how a localised
+    disturbance propagates and interacts with an obstacle
+    through a simplified two-dimensional numerical model.
+  </p>
+
+  <p>
+    Combining Python simulations with a small basin experiment,
+    we examined the evolving wave patterns and explored
+    how the model could be improved.
+  </p>
+`;
+  waves.Methods = `
+    <h3>Model &amp; numerical approach</h3>
+
+    <h4>A forced two-dimensional wave equation</h4>
+
+    <div class="waves-equation">
+      ∂²u/∂t² = c² (∂²u/∂x² + ∂²u/∂y²) + F(x, y, t)
+    </div>
+
+    <p>
+      The scalar field u represents the modelled disturbance,
+      c is a constant propagation speed, and F represents the
+      localised forcing. The lake-inspired calculation starts
+      from a surface at rest.
+    </p>
+
+    <h4>Discretisation and implementation</h4>
+
+    <ul>
+      <li>
+        A regular square grid and a five-point finite-difference
+        Laplacian.
+      </li>
+      <li>
+        Centred second-order approximations in space and time,
+        with explicit time stepping.
+      </li>
+      <li>
+        An elliptical forcing region with a time-dependent source.
+      </li>
+      <li>
+        Mur absorbing conditions on the outer boundaries to
+        reduce outgoing-wave reflections.
+      </li>
+      <li>
+        Python implementation with NumPy and Matplotlib
+        visualisations.
+      </li>
+    </ul>
+
+    <h4>Time-step stability</h4>
+
+    <div class="waves-equation">
+      c Δt / h ≤ 1 / √2 ≈ 0.707
+    </div>
+
+    <p>
+      For the standard interior scheme on an equal-spacing grid,
+      the time step must respect this CFL condition.
+      The reference tests examined behaviour below, near and
+      above the stability threshold.
+    </p>
+
+    <h4>Obstacle representation</h4>
+
+    ${figure(
+      "waves-obstacle.png",
+      "Initial square computational domain with an obstacle near x and y equal to 0.7",
+      "Initial computational domain and square obstacle."
+    )}
+
+    <p>
+      The initial model constrained the disturbance inside the
+      obstacle. A revised implementation used neighbouring field
+      values to update cells next to its boundary, exploring
+      a different reflected response.
+    </p>
+  `;
+
+  waves.Results = `
+    <h3>Results: simulate, observe, revise</h3>
+
+    <h4>1. Numerical checks on the reference problem</h4>
+
+    <div class="waves-gallery">
+      ${figure(
+        "waves-reference-initial.png",
+        "Initial displacement field in the membrane reference problem",
+        "Reference problem · Initial field."
+      )}
+
+      ${figure(
+        "waves-reference-final.png",
+        "Final displacement field in the membrane reference problem",
+        "Reference problem · Final field."
+      )}
+    </div>
+
+    <p>
+      The membrane problem provided a reference for checking
+      the implementation before adding local forcing,
+      absorbing boundaries and an obstacle. The project also
+      compared final errors across grid spacings and time-step ratios.
+    </p>
+
+    <details>
+      <summary>View the grid-spacing error comparison</summary>
+
+      ${figure(
+        "waves-error.png",
+        "Final error versus grid spacing for three time-step ratios",
+        "Final error versus grid spacing for different time-step ratios D."
+      )}
+    </details>
+
+    <h4>2. Propagation from a localised disturbance</h4>
+
+    <div class="waves-gallery">
+      ${figure(
+        "waves-time-016.png",
+        "Early localised disturbance at t equals 0.16",
+        "t = 0.16 · Localised disturbance."
+      )}
+
+      ${figure(
+        "waves-time-042.png",
+        "Wave interaction with the obstacle at t equals 0.42",
+        "t = 0.42 · Interaction with the obstacle."
+      )}
+
+      ${figure(
+        "waves-time-060.png",
+        "Disturbed wavefront propagating around the obstacle at t equals 0.60",
+        "t = 0.60 · Wavefront deformation."
+      )}
+
+      ${figure(
+        "waves-time-095.png",
+        "Wavefront approaching the domain boundaries at t equals 0.95",
+        "t = 0.95 · Propagation towards the boundaries."
+      )}
+    </div>
+
+    <p>
+      The elliptical source generates an expanding disturbance.
+      As the wave reaches the obstacle, its shape changes.
+      The outer boundary conditions are intended to let outgoing
+      waves leave the domain with reduced reflection.
+    </p>
+
+    <details>
+      <summary>
+        Numerical limitation: late-time corner artefacts
+      </summary>
+
+      <div class="waves-gallery">
+        ${figure(
+          "waves-corner-126.png",
+          "Late-time simulation with corner artefacts at t equals 1.26",
+          "t = 1.26 · Boundary and corner artefacts."
+        )}
+
+        ${figure(
+          "waves-corner-216.png",
+          "Late-time simulation with persistent boundary artefacts at t equals 2.16",
+          "t = 2.16 · Persistent numerical artefacts."
+        )}
+      </div>
+
+      <p>
+        The initial calculation develops late-time corner artefacts.
+        This identifies boundary and corner treatment as a priority
+        for further numerical checks.
+      </p>
+    </details>
+
+    <h4>3. A simple physical experiment</h4>
+
+    <p>
+      A small basin experiment was carried out by dropping a stone
+      into water near an object. Observing the resulting ripples
+      prompted a reconsideration of the initial obstacle model.
+    </p>
+
+    <div class="waves-gallery">
+      ${figure(
+        "waves-experiment-1.png",
+        "Basin experiment with water and an obstacle before the stone impact",
+        "Basin experiment · Initial setup."
+      )}
+
+      ${figure(
+        "waves-experiment-3.png",
+        "Stone impact and ripples in the basin experiment",
+        "Basin experiment · Impact and ripples."
+      )}
+    </div>
+
+    <p>
+      The comparison was qualitative: it helped identify behaviours
+      to explore, without providing a quantitative validation
+      of the simulation.
+    </p>
+
+    <h4>4. Revising the obstacle treatment</h4>
+
+    <div class="waves-gallery">
+      ${figure(
+        "waves-revised-1.png",
+        "Early field in the revised obstacle simulation",
+        "Revised model · Early propagation."
+      )}
+
+      ${figure(
+        "waves-revised-2.png",
+        "Later field in the revised obstacle simulation",
+        "Revised model · Later propagation."
+      )}
+    </div>
+
+    <p>
+      The revised script uses neighbouring values in the
+      obstacle-adjacent update to explore a reflected response.
+      It also changes forcing parameters and obstacle size,
+      so these snapshots illustrate a revised configuration
+      rather than an isolated test of one boundary modification.
+    </p>
+  `;
+
+  waves.Conclusion = `
+    <h3>Conclusions &amp; perspectives</h3>
+
+    <ul>
+      <li>
+        A finite-difference wave solver was developed from
+        a reference problem and extended with local forcing
+        and an obstacle.
+      </li>
+      <li>
+        Absorbing boundaries and obstacle treatment strongly
+        influence the computed wave pattern.
+      </li>
+      <li>
+        Late-time corner artefacts revealed limitations
+        in the initial implementation.
+      </li>
+      <li>
+        A simple physical observation guided a revision
+        of the numerical model.
+      </li>
+    </ul>
+
+    <h4>Skills developed</h4>
+
+    <p>
+      Python programming, finite differences, CFL stability analysis,
+      boundary-condition implementation, scientific visualisation
+      and critical comparison between a model and physical observations.
+    </p>
+
+    <h4>Further investigation</h4>
+
+    <p>
+      Improve corner treatment, compare obstacle conditions
+      with fixed forcing and geometry, and perform systematic
+      numerical error checks. A gravity–capillary water-wave model
+      would also provide a more complete physical description
+      than the constant-speed wave equation used here.
+    </p>
+  `;
+
+
+   
+
+
+  const previousRenderer = showProjectPart;
+
+  showProjectPart = function (part) {
+    
+    if (activeProject !== "waves") {
+      previousRenderer(part);
+      return;
+    }
+
+    document.querySelectorAll("[data-part]").forEach(button => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.part === part)
+      );
+    });
+
+    document.getElementById("detail-content").innerHTML =
+      projects.waves[part];
+  };
+
+  if (activeProject === "waves") {
+    const panel = document.querySelector('[data-panel="detail"]');
+
+    if (panel && !panel.hidden) {
+      openProject("waves");
+    }
+  }
+})();
+</script>
+
+<style>
+  /* Supprimer le cadre rectangulaire */
+  .detail[data-theme="bacteria"] .feature-image {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  /* Garder uniquement l’image ronde */
+  .detail[data-theme="bacteria"] .feature-image img {
+    display: block;
+    width: 260px;
+    height: 260px;
+    max-width: 100%;
+    margin: 24px auto;
+    padding: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Retirer la légende sous l’image */
+  .detail[data-theme="bacteria"] .feature-image figcaption {
+    display: none;
+  }
+</style>
+
+<script>
+(function () {
+  const imageURL =
+    "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bacillus_subtilis_swarm.JPG";
+
+  projects.bacteria.image = imageURL;
+  projects.bacteria.caption =
+    "Bacillus subtilis colony patterns — illustrative photograph.";
+
+  const cardImage =
+    document.querySelector('[data-project="bacteria"] img');
+
+  if (cardImage) {
+    cardImage.src = imageURL;
+    cardImage.alt = "Branching bacterial colony patterns";
+  }
+
+  const cover =
+    document.querySelector('.detail .feature-image');
+
+  if (cover) {
+    const credit = document.createElement("p");
+
+    credit.className = "bacteria-image-credit";
+    credit.innerHTML = `
+      Illustrative photograph:
+      <a
+        href="https://commons.wikimedia.org/wiki/File:Bacillus_subtilis_swarm.JPG"
+        target="_blank"
+        rel="noopener"
+      >Adrian Daerr</a>
+      ·
+      <a
+        href="https://creativecommons.org/licenses/by-sa/4.0/"
+        target="_blank"
+        rel="noopener"
+      >CC BY-SA 4.0</a>
+      · Circular crop
+    `;
+
+    cover.after(credit);
+  }
+
+  if (activeProject === "bacteria") {
+    openProject("bacteria");
+  }
+})();
+</script>
+
+<style>
+  .bacteria-image-credit {
+    display: none;
+  }
+
+  .detail[data-theme="bacteria"] .bacteria-image-credit {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    color: #a9bbae;
+    margin: 0 0 24px;
+  }
+
+  .bacteria-image-credit a {
+    color: inherit;
+  }
+</style>
+
+<style>
+  .detail[data-theme="bacteria"] .tab-content h3 {
+    color: #e0edda;
+    font-size: 27px;
+    margin: 0 0 16px;
+  }
+
+  .detail[data-theme="bacteria"] .tab-content h4 {
+    color: #b9db92;
+    font-size: 18px;
+    margin: 28px 0 14px;
+  }
+
+  .detail[data-theme="bacteria"] .tab-content p {
+    max-width: 850px;
+  }
+
+  .detail[data-theme="bacteria"] .tab-content li {
+    margin: 10px 0;
+  }
+
+  .bacteria-equation {
+    padding: 18px;
+    margin: 20px 0;
+    border-left: 3px solid #b9db92;
+    background: #ffffff06;
+    line-height: 2;
+    overflow-wrap: anywhere;
+  }
+
+  .bacteria-result {
+    max-width: 850px;
+    margin: 24px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #080d0a;
+  }
+
+  .bacteria-result img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 460px;
+    object-fit: contain;
+  }
+
+  .bacteria-result figcaption {
+    padding: 12px 16px;
+    color: #c4d3c5;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .detail[data-theme="bacteria"] details {
+    margin: 24px 0;
+  }
+
+  .detail[data-theme="bacteria"] summary {
+    cursor: pointer;
+    padding: 12px 0;
+    color: #b9db92;
+  }
+
+  @media (max-width: 600px) {
+    .bacteria-result img {
+      max-height: 340px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  if (typeof projects === "undefined" || !projects.bacteria) return;
+
+  function result(file, alt, caption) {
+    return `
+      <figure class="bacteria-result">
+        <a href="images/${file}" target="_blank" rel="noopener">
+          <img
+            src="images/${file}"
+            alt="${alt}"
+            loading="lazy"
+          >
+        </a>
+        <figcaption>${caption}</figcaption>
+      </figure>
+    `;
+  }
+
+  const bacteria = projects.bacteria;
+
+  bacteria.title = "Bacterial Patterns";
+  bacteria.label =
+    "Reaction–diffusion · Nonlinear dynamics · Python";
+
+  bacteria.intro =
+    "Exploring how local interactions and diffusion generate complex spatial patterns, from reaction–diffusion structures to bacterial colony growth.";
+
+  bacteria.Introduction = `
+    <h3>How do patterns emerge?</h3>
+
+    <p>
+      Complex spatial structures can emerge from simple local rules.
+      This project investigated how diffusion, growth and nutrient
+      availability influence the formation and evolution of patterns.
+    </p>
+
+    <p>
+      Two complementary models were explored: the Gray–Scott
+      reaction–diffusion model and a Kawasaki–Murray model coupling
+      bacterial density with nutrient concentration. Python simulations
+      were used to study the influence of parameters and initial conditions.
+    </p>
+  `;
+
+  bacteria.Methods = `
+    <h3>Two models, two approaches</h3>
+
+    <h4>1. Gray–Scott: reaction and diffusion</h4>
+
+    <div class="bacteria-equation">
+      ∂u/∂t = Dᵤ ∇²u − uv² + F(1 − u)<br>
+      ∂v/∂t = Dᵥ ∇²v + uv² − (F + k)v
+    </div>
+
+    <p>
+      The fields u and v represent two interacting species.
+      Their evolution combines diffusion, an autocatalytic reaction,
+      feed rate F and removal parameter k. This simplified chemical
+      model provides a framework for exploring pattern formation.
+    </p>
+
+    <h4>2. Kawasaki–Murray: nutrients and bacterial growth</h4>
+
+    <div class="bacteria-equation">
+      ∂n/∂t = ∇²n − nb<br>
+      ∂b/∂t = ∇ · [σ(x) nb ∇b] + nb
+    </div>
+
+    <p>
+      Here, n is the nutrient concentration and b is the bacterial
+      density. Nutrient consumption supports growth, while bacterial
+      diffusion depends on both fields. A spatially varying motility
+      coefficient σ(x) represents heterogeneity in the medium.
+    </p>
+
+    
+  `;
+
+  bacteria.Results = `
+    <h3>From a local seed to spatial structures</h3>
+
+    <h4>1. Influence of the initial seed</h4>
+
+    <p>
+      Starting from square seeds of different sizes, the Gray–Scott
+      simulations develop increasingly intricate structures.
+      The comparisons illustrate how the initial perturbation
+      influences the subsequent spatial organisation.
+    </p>
+
+    ${result(
+      "bacteria-seed-size.png",
+      "Gray–Scott time sequences for four different initial seed sizes",
+      "Gray–Scott · Different initial seed sizes. Each row follows one simulation over time."
+    )}
+
+    <h4>2. Changing feed and removal rates</h4>
+
+    <p>
+      Changing F and k produces distinct outcomes: expanding regions,
+      spot-like structures and labyrinthine patterns. Some configurations
+      evolve towards nearly uniform fields, while others retain
+      a structured spatial organisation.
+    </p>
+
+    ${result(
+      "bacteria-feed-kill-2.png",
+      "Gray–Scott sequences showing spots and labyrinthine structures for different F and k values",
+      "Gray–Scott · Pattern evolution for different feed and removal parameters."
+    )}
+
+    <details>
+      <summary>
+        View additional feed and removal comparisons
+      </summary>
+
+      ${result(
+        "bacteria-feed-kill-1.png",
+        "Additional Gray–Scott sequences for different F and k values",
+        "Additional parameter combinations and their evolving spatial fields."
+      )}
+    </details>
+
+    <h4>3. Changing diffusion coefficients</h4>
+
+    <p>
+      The comparisons of Dᵤ and Dᵥ show how relative diffusion
+      changes the evolving fields. The resulting configurations
+      range from persistent fine structures to smoother or
+      more spatially uniform states.
+    </p>
+
+    ${result(
+      "bacteria-diffusion.png",
+      "Gray–Scott time sequences for different diffusion coefficient combinations",
+      "Gray–Scott · Influence of the diffusion coefficients Dᵤ and Dᵥ."
+    )}
+
+    <h4>4. Nutrient-coupled bacterial growth</h4>
+
+    <p>
+      The Kawasaki–Murray simulation follows the expansion of
+      an initially localised colony. The sequence shows a compact
+      colony developing an irregular outline and internal variations.
+    </p>
+
+    ${result(
+      "bacteria-growth.png",
+      "Bacterial colony evolution at times 20, 60, 200, 500, 1200 and 2262",
+      "Kawasaki–Murray · Colony evolution from t = 20 to t = 2262."
+    )}
+
+    <p>
+      This configuration illustrates colony growth and heterogeneity.
+      The displayed sequence does not show clearly separated
+      dendritic branches; exploring more strongly branched regimes
+      remains a direction for further investigation.
+    </p>
+  `;
+
+  bacteria.Conclusion = `
+    <h3>Conclusions &amp; perspectives</h3>
+
+    <p>
+      The simulations illustrate how diffusion and local interactions
+      can produce a wide range of spatial structures. Their morphology
+      depends on the model, parameter choices and initial conditions.
+    </p>
+
+    <ul>
+      <li>
+        Gray–Scott provides a simple framework for exploring
+        spots, bands and labyrinthine structures.
+      </li>
+      <li>
+        Kawasaki–Murray connects bacterial spreading with nutrient
+        availability through nonlinear diffusion.
+      </li>
+      <li>
+        The displayed bacterial-growth simulation produces a compact,
+        irregular colony, motivating further exploration of
+        branching regimes.
+      </li>
+    </ul>
+
+    <h4>Skills developed</h4>
+
+    <p>
+      Python programming, reaction–diffusion modelling, finite
+      differences, nonlinear diffusion, parameter studies and
+      scientific visualisation.
+    </p>
+
+    <h4>Further investigation</h4>
+
+    <p>
+      Map pattern regimes more systematically, test sensitivity
+      to grid spacing and time step, and explore the influence
+      of nutrient levels and spatial heterogeneity on colony morphology.
+    </p>
+  `;
+
+  const previousRenderer = showProjectPart;
+
+  showProjectPart = function (part) {
+    if (activeProject !== "bacteria") {
+      previousRenderer(part);
+      return;
+    }
+
+    document.querySelectorAll("[data-part]").forEach(button => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.part === part)
+      );
+    });
+
+    document.getElementById("detail-content").innerHTML =
+      bacteria[part];
+  };
+
+  if (activeProject === "bacteria") {
+    const panel = document.querySelector('[data-panel="detail"]');
+
+    if (panel && !panel.hidden) {
+      openProject("bacteria");
+    }
+  }
+})();
+</script>
+
+
+<style>
+  .detail[data-theme="pacman"] .tab-content h3 {
+    color: #fff1a8;
+    font-size: 27px;
+    margin: 0 0 16px;
+  }
+
+  .detail[data-theme="pacman"] .tab-content h4 {
+    color: #ffe46b;
+    font-size: 18px;
+    margin: 28px 0 14px;
+  }
+
+  .detail[data-theme="pacman"] .tab-content p {
+    max-width: 850px;
+  }
+
+  .detail[data-theme="pacman"] .tab-content li {
+    margin: 10px 0;
+  }
+
+  .pacman-code {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    background: #0b0b16;
+    border: 1px solid #ffe46b25;
+    color: #e2def4;
+    overflow-x: auto;
+    line-height: 1.7;
+    font-size: 13px;
+    white-space: pre;
+  }
+
+  .pacman-code code {
+    font-family: Consolas, "Liberation Mono", monospace;
+    color: inherit;
+    background: none;
+  }
+
+  .detail[data-theme="pacman"] details {
+    margin: 22px 0;
+  }
+
+  .detail[data-theme="pacman"] summary {
+    color: #ffe46b;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+
+  .pacman-result {
+    max-width: 360px;
+    margin: 24px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .pacman-result img {
+    display: block;
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+  }
+
+  .pacman-result figcaption {
+    background: #211b32;
+    color: #d6d0e5;
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .pacman-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .pacman-controls span {
+    padding: 10px 14px;
+    border: 1px solid #ffe46b30;
+    border-radius: 10px;
+    color: #e2def4;
+    background: #ffffff05;
+  }
+
+  .pacman-controls kbd {
+    color: #ffe46b;
+    font-family: monospace;
+    margin-right: 8px;
+  }
+</style>
+
+<script>
+(function () {
+  if (typeof projects === "undefined" || !projects.pacman) return;
+
+  function code(text) {
+    const escaped = text.trim()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    return `
+      <pre class="pacman-code"><code>${escaped}</code></pre>
+    `;
+  }
+
+  const snippets = {
+    entity: `
+TYPE individu
+   INTEGER               :: categorie
+   INTEGER, DIMENSION(2) :: pos, old_pos
+   CHARACTER             :: symbol
+END TYPE individu
+`,
+
+    allocation: `
+ALLOCATE (dom%grille(0:(dom%ng)+1,0:(dom%ng)+1), STAT=OK)
+IF (OK/=0) STOP "Erreur d'allocation : grille ou friandise"
+ALLOCATE (dom%friandise(dom%nfri), STAT=OK)
+IF (OK/=0) STOP "Erreur d'allocation : grille ou friandise"
+ALLOCATE (dom%fantome(dom%nfant), STAT=OK)
+IF (OK/=0) STOP "Erreur d'allocation : grille ou friandise"
+`,
+
+    placement: `
+DO
+   CALL RANDOM_NUMBER(r1)
+   CALL RANDOM_NUMBER(r2)
+   lin = FLOOR(r1*(dom%ng)+1)
+   col = FLOOR(r2*(dom%ng)+1)
+   IF (dom%grille(lin,col)==".") EXIT
+END DO
+dom%friandise(i)%pos=(/lin,col/)
+dom%grille(lin,col)="O"
+`,
+
+    movement: `
+CASE("e") ! Aller en haut
+   IF ((joueur%pos(1)-1)>=1) THEN
+      joueur%old_pos = joueur%pos
+      joueur%pos = (/joueur%pos(1)-1,joueur%pos(2)/)
+      nb_depl=nb_depl+1
+   END IF
+`,
+
+    ghosts: `
+CALL RANDOM_NUMBER(r)
+ale = FLOOR(r*8+1)
+`,
+
+    collecting: `
+IF (dom%grille(jrow,jcol) == "O") THEN
+   dom%nfri = dom%nfri - 1
+END IF
+dom%grille(jrow,jcol) = "@"
+`,
+
+    trajectory: `
+write(11, *)t,dom%joueur%pos(1),dom%joueur%pos(2), &
+   (dom%fantome(i)%pos(1), dom%fantome(i)%pos(2), i=1,dom%nfant)
+`
+  };
+
+  const pacman = projects.pacman;
+
+  pacman.title = "Pac-Man in Fortran";
+  pacman.label =
+    "Fortran · Algorithms · Interactive programming";
+
+  pacman.intro =
+    "A terminal-based game built around structured data, keyboard input, random movement and interactions on a two-dimensional grid.";
+
+  pacman.Introduction = `
+    <h3>Turning game rules into algorithms</h3>
+
+    <p>
+      This academic programming project implemented a simplified
+      Pac-Man-inspired game in Fortran. The player moves across a
+      character grid, collecting treats while avoiding randomly
+      moving ghosts.
+    </p>
+
+    <p>
+      The objective was to translate simple game rules into an
+      organised program: represent the entities, update their
+      positions, manage interactions and determine when the game ends.
+    </p>
+
+    <h4>The game at a glance</h4>
+
+    <ul>
+      <li><strong>@</strong> — the keyboard-controlled player.</li>
+      <li><strong>O</strong> — treats to collect.</li>
+      <li><strong>X</strong> — randomly moving ghosts.</li>
+      <li>
+        Collect all treats to win; encountering a ghost ends the game.
+      </li>
+    </ul>
+  `;
+
+  pacman.Methods = `
+    <h3>Inside the implementation</h3>
+
+    <h4>1. Organising the game state</h4>
+
+    <p>
+      The module <code>ressources</code> defines two derived types.
+      <code>individu</code> stores an entity's category, current and
+      previous positions, and display symbol. <code>domaine</code>
+      groups the player, treats, ghosts and character grid.
+    </p>
+
+    ${code(snippets.entity)}
+
+    <details>
+      <summary>Dynamic memory allocation</summary>
+
+      <p>
+        Allocatable arrays adapt the grid and entity lists to the
+        settings read from <code>donnee.dat</code>.
+      </p>
+
+      ${code(snippets.allocation)}
+    </details>
+
+    <h4>2. Random initial placement</h4>
+
+    <p>
+      Random coordinates are generated within the grid. Treats
+      and ghosts are placed only in empty cells, avoiding overlap
+      during initialisation. This excerpt shows the placement of a treat.
+    </p>
+
+    ${code(snippets.placement)}
+
+    <h4>3. Keyboard-controlled movement</h4>
+
+    <p>
+      The player routine reads input through <code>selec_get</code>
+      and selects a direction. Each move checks the grid boundary,
+      stores the previous position and increments the movement counter.
+    </p>
+
+    <div class="pacman-controls">
+      <span><kbd>e</kbd>Up</span>
+      <span><kbd>l</kbd>Left</span>
+      <span><kbd>d</kbd>Down</span>
+      <span><kbd>m</kbd>Right</span>
+      <span><kbd>Space</kbd>Quit</span>
+    </div>
+
+    ${code(snippets.movement)}
+
+    <h4>4. Random ghost movement</h4>
+
+    <p>
+      A random integer selects one of eight directions, including
+      diagonals. Boundary checks prevent moves outside the grid;
+      subsequent game logic handles occupied destination cells.
+    </p>
+
+    ${code(snippets.ghosts)}
+
+    <h4>5. The game loop</h4>
+
+    <p>
+      Each iteration processes player input, updates the player
+      and treats, advances the ghosts, checks interactions, records
+      positions and refreshes the display. The victory routine
+      checks whether any treats remain.
+    </p>
+
+    <p>
+      The excerpts shown here are selected sections of the source,
+      rather than standalone programs. The trajectory output below
+      is wrapped across two lines for readability.
+    </p>
+  `;
+
+  pacman.Results = `
+    <h3>Game behaviour &amp; recorded trajectories</h3>
+
+    <h4>A character-based playing field</h4>
+
+    <figure class="pacman-result">
+      <a
+        href="images/pacman-render.png"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/pacman-render.png"
+          alt="Grid illustration with a player, treats and ghosts"
+          loading="lazy"
+        >
+      </a>
+
+      <figcaption>
+       Initial game state
+      </figcaption>
+    </figure>
+
+    <p>
+      The terminal display represents the player, treats and ghosts
+      using characters. It also shows the number of treats remaining.
+    </p>
+
+    <h4>Collecting treats</h4>
+
+    <p>
+      When the player reaches a cell containing a treat, the counter
+      decreases and the player symbol replaces it.
+    </p>
+
+    ${code(snippets.collecting)}
+
+    <h4>Ending a game</h4>
+
+    <p>
+      The program includes victory and defeat routines. Victory
+      reports the movement count; defeat also reports how many treats
+      were collected. Ghost interactions are checked during the
+      update loop.
+    </p>
+
+    <h4>Recording movement</h4>
+
+    <p>
+      The file <code>traj.res</code> stores the iteration index and
+      the positions of the player and every ghost. These records
+      support subsequent trajectory visualisation with Gnuplot.
+    </p>
+
+    ${code(snippets.trajectory)}
+
+    <h4>Development challenges</h4>
+
+    <p>
+      Debugging focused on maintaining a consistent grid display,
+      keeping ghosts inside the playing field and preventing them
+      from removing treats. Separating tasks into subroutines helped
+      isolate and understand these issues.
+    </p>
+  `;
+
+  pacman.Conclusion = `
+    <h3>What this project taught me</h3>
+
+    <p>
+      This project developed my ability to translate rules into
+      algorithms and organise a Fortran program around clear data
+      structures and subroutines. It also made debugging a central
+      part of the development process.
+    </p>
+
+    <h4>Skills developed</h4>
+
+    <ul>
+      <li>
+        Fortran modules, derived types and allocatable arrays.
+      </li>
+      <li>
+        Conditional logic, loops and random-number generation.
+      </li>
+      <li>
+        Keyboard input, grid updates and entity interactions.
+      </li>
+      <li>
+        File input/output and trajectory recording.
+      </li>
+    </ul>
+
+    <h4>Possible improvements</h4>
+
+    <p>
+      Test collision and no-input cases more systematically,
+      ensure terminal settings are restored on every exit,
+      and extend the game with obstacles, difficulty levels
+      or more strategic ghost movement.
+    </p>
+  `;
+
+  const previousRenderer = showProjectPart;
+
+  showProjectPart = function (part) {
+    if (activeProject !== "pacman") {
+      previousRenderer(part);
+      return;
+    }
+
+    document.querySelectorAll("[data-part]").forEach(button => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.part === part)
+      );
+    });
+
+    document.getElementById("detail-content").innerHTML =
+      pacman[part];
+  };
+
+  if (activeProject === "pacman") {
+    const panel = document.querySelector('[data-panel="detail"]');
+
+    if (panel && !panel.hidden) {
+      openProject("pacman");
+    }
+  }
+})();
+</script>
+
+<style>
+  .detail[data-theme="pacman"] .feature-image {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .detail[data-theme="pacman"] .feature-image img {
+    display: block;
+    width: 340px;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 24px auto;
+    padding: 0;
+    object-fit: contain;
+    border-radius: 16px;
+    background: transparent;
+  }
+
+  .detail[data-theme="pacman"] .feature-image figcaption {
+    display: none;
+  }
+</style>
+
+<script>
+(function () {
+  document.querySelectorAll('[data-page="contact"]').forEach(button => {
+    button.textContent = "Contact";
+  });
+
+  const section = document.querySelector('[data-panel="contact"]');
+  if (!section) return;
+
+  const label = section.querySelector(".eyebrow");
+  if (label) label.textContent = "Contact";
+
+  const title = section.querySelector("h2");
+  if (title) title.textContent = "Let’s connect.";
+
+  const intro = section.querySelector(".intro");
+  if (intro) {
+    intro.textContent =
+      "Interested in my work? Feel free to get in touch to discuss internship opportunities or learn more about my projects.";
+  }
+
+  section.querySelectorAll(".contact-row").forEach(row => {
+    const heading = row.querySelector("h3");
+
+    if (heading && /curriculum vitae|\bcv\b/i.test(heading.textContent)) {
+      row.remove();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
